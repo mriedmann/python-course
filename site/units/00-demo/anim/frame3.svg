@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 120" width="360" height="120">
+<style>text{font:14px monospace;fill:#212529}.tag{fill:#e7f1ff;stroke:#0b5ed7}.box{fill:#fff;stroke:#495057}line{stroke:#495057}</style>
+<rect class="tag" x="10" y="45" width="100" height="30" rx="6"/><text x="38" y="65">value</text>
+<line x1="110" y1="60" x2="170" y2="60"/>
+<rect class="box" x="170" y="45" width="70" height="30"/><text x="186" y="65">50.0</text>
+<text x="250" y="65">= 4 * 12.5</text>
+</svg>
