@@ -26,12 +26,18 @@ GRADE = ".exercise-grade"  # check feedback; .alert-success = pass, .alert-dange
 TIMEOUT_MS = 120_000
 
 
+class QuietServer(http.server.ThreadingHTTPServer):
+    def handle_error(self, request, client_address):  # browsers abort requests: BrokenPipe is noise
+        if not isinstance(sys.exc_info()[1], (BrokenPipeError, ConnectionResetError)):
+            super().handle_error(request, client_address)
+
+
 def serve() -> str:
     class Handler(http.server.SimpleHTTPRequestHandler):
         def log_message(self, *args):
             pass
 
-    server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), functools.partial(Handler, directory=SITE))
+    server = QuietServer(("127.0.0.1", 0), functools.partial(Handler, directory=SITE))
     threading.Thread(target=server.serve_forever, daemon=True).start()
     return f"http://127.0.0.1:{server.server_port}/"
 
@@ -39,8 +45,31 @@ def serve() -> str:
 def open_page(page, url: str) -> float:
     t0 = time.monotonic()
     page.goto(url, wait_until="domcontentloaded")
-    page.wait_for_selector(RUN_READY, timeout=TIMEOUT_MS)
+    page.wait_for_selector(RUN_READY, state="attached", timeout=TIMEOUT_MS)  # hidden behind a warm-up
+    pass_warmup(page)
     return time.monotonic() - t0
+
+
+def submit_quiz(quiz) -> str:
+    """Answer every question correctly (from data-choice / data-answer), submit, return the score text."""
+    for q in quiz.locator(".question").all():
+        choice = q.get_attribute("data-choice")
+        if choice is not None:
+            q.locator("input[type=radio]").nth(int(choice)).check()
+        else:
+            q.locator("input[type=text]").fill(q.get_attribute("data-answer").split("|")[0].strip())
+    quiz.get_by_role("button", name="Check answers").click()
+    n = quiz.locator(".question").count()
+    expect(quiz.locator(".quiz-score")).to_have_text(f"Score: {n}/{n}")
+    return f"Score: {n}/{n}"
+
+
+def pass_warmup(page) -> None:
+    """Submit the page's warm-up quiz, if it has one, so that its live cells become visible."""
+    warmup = page.locator(".quiz.warmup")
+    if warmup.count():
+        submit_quiz(warmup)
+        expect(page.locator(".exercise-cell .cm-editor").first).to_be_visible(timeout=TIMEOUT_MS)
 
 
 def run_cell(page, cell, code: str) -> None:
@@ -48,7 +77,9 @@ def run_cell(page, cell, code: str) -> None:
     editor.click()
     page.keyboard.press("ControlOrMeta+A")
     page.keyboard.insert_text(code)  # one input event: no auto-indent or bracket closing
-    assert editor.inner_text() == code, f"editor did not take the code: {editor.inner_text()!r}"
+    # CodeMirror's inner_text doubles empty lines; compare without them.
+    lines = [line for line in editor.inner_text().splitlines() if line.strip()]
+    assert lines == [line for line in code.splitlines() if line.strip()], "editor did not take the code"
     cell.locator(GRADE).evaluate_all("els => els.forEach(e => e.remove())")  # wait for fresh feedback
     cell.locator(RUN_READY).click()
 
