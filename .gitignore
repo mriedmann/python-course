@@ -6,3 +6,4 @@ site/_site/
 site/.quarto/
 .DS_Store
 archive/
+.claude/worktrees/
