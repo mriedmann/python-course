@@ -83,3 +83,7 @@ body:has(.quiz.warmup:not(.submitted)) .exercise-cell::before {
 .anim-controls { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin: 0.5rem 0; }
 .anim-label { margin: 0 0 0 0.5rem; color: #495057; }
 .anim > .btn { margin-top: 0.5rem; }
+
+/* Error explanations (errors.js): unit texts stay hidden until a matching error occurs */
+.error-explain { display: none; }
+.error-help { margin: 0.5rem 0; padding: 0.5rem 0.75rem; border-left: 4px solid #b02a37; background: #fdf2f3; color: #212529; }
