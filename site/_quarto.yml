@@ -39,7 +39,7 @@ format:
               const root = new URL(document.querySelector('meta[name="quarto:offset"]').content, location.href);
               navigator.serviceWorker.register(new URL("sw.js", root), { scope: root.pathname }).catch(console.error);
             }
-            for (const f of ["ladder.js", "stop.js", "quiz.js", "predict.js", "parsons.js", "anim.js"]) {
+            for (const f of ["ladder.js", "stop.js", "drafts.js", "quiz.js", "predict.js", "parsons.js", "anim.js"]) {
               const s = document.createElement("script");
               s.src = document.querySelector('meta[name="quarto:offset"]').content + "components/" + f;
               document.body.appendChild(s);

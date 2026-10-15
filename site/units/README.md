@@ -33,7 +33,7 @@ solution in `index.qmd` identical to the `solution.py` section (the browser smok
 page's solution, pytest runs `solution.py`).
 
 **Components** (`site/components/`, loaded on every page by `include-after-body` in `_quarto.yml`):
-`ladder.js` (solution gate) and `stop.js` (a Stop button next to Run while a cell runs; it reloads
+`ladder.js` (solution gate), `drafts.js` (saves editor code to localStorage, restores it on load) and `stop.js` (a Stop button next to Run while a cell runs; it reloads
 the page because quarto-live 0.2.0 cannot interrupt Pyodide). Not shortcodes; nothing to write per unit.
 
 ````markdown
