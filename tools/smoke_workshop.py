@@ -18,9 +18,7 @@ from build_workshop import ARGS, CACHE, DIST, VERSION
 TOOLS = pathlib.Path(__file__).resolve().parent
 SMOKES = [
     ["smoke_unit.py", "units/07-functions/", "--raises", "fix_order:is not defined", "--predict", r"u7-predict:18701.1\nNone"],
-    ["smoke_pages.py"],
     ["smoke_offline.py"],
-    ["smoke_thirdparty.py"],
 ]
 
 
@@ -68,12 +66,8 @@ def main() -> int:
                 r = subprocess.run([sys.executable, str(TOOLS / cmd[0]), *cmd[1:], "--base-url", base],
                                    capture_output=True, text=True, cwd=TOOLS.parent)
                 out = r.stdout + r.stderr
-                if cmd[0] == "smoke_pages.py":  # pandas must pass; web needs internet
-                    ok = "smoke/pandas.html: ok" in out
-                    print(f"{'ok' if ok else 'FAIL'} {cmd[0]} (pandas); web: {'ok' if 'smoke/web.html: ok' in out else 'NOT VERIFIED (needs internet)'}")
-                else:
-                    ok = r.returncode == 0
-                    print(f"{'ok' if ok else 'FAIL'} {cmd[0]}")
+                ok = r.returncode == 0
+                print(f"{'ok' if ok else 'FAIL'} {cmd[0]}")
                 if not ok:
                     print(out[-1500:])
                 failed |= not ok

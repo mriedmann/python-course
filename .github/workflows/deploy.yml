@@ -38,8 +38,7 @@ jobs:
         run: |
           google-chrome --version
           SKIP_RENDER=1 SMOKE_LOG_DIR=/tmp/smoke-logs bash tools/smoke_all.sh
-      - name: Build offline workshop package
-        run: uv run python tools/build_workshop.py
+      # smoke_all.sh (workshop step) has built and verified the zip
       - uses: actions/upload-artifact@v5
         with:
           name: python-course-workshop

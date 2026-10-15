@@ -48,14 +48,15 @@ setlocal
 cd /d "%~dp0"
 set PORT={port}
 :find
+rem No parenthesized block here: cmd expands %PORT% inside ( ) when the block is parsed.
 netstat -ano | findstr /R /C:":%PORT% .*LISTENING" >nul
-if %errorlevel%==0 (
-  set /a PORT+=1
-  if %PORT% LSS {limit} goto find
-  echo No free port found.
-  pause
-  exit /b 1
-)
+if errorlevel 1 goto found
+set /a PORT+=1
+if %PORT% LSS {limit} goto find
+echo No free port found between {port} and {limit}.
+pause
+exit /b 1
+:found
 echo Python course is running at http://127.0.0.1:%PORT%/
 echo Close this window to stop the course.
 start "" /min cmd /c "ping -n 3 127.0.0.1 >nul & start "" http://127.0.0.1:%PORT%/"
