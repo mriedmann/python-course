@@ -101,3 +101,10 @@ skill, misconception and retrieved-unit IDs exist in `docs/01`/`docs/03`; durati
 tags span two retrieved units; a check at least every 15 minutes; per exercise an editor, setup and
 check block, exactly 3 hints, 1 solution and a `check_<label>` in `checks.py`; an exit question
 tagged with a unit misconception. Run: `uv run pytest -q tests/test_unit_lint.py`.
+
+**Progress** (`components/progress.js`): step bar from the page's `h2.step` sections plus the navbar
+"Progress" panel. Keys (all `pycourse:v1:<path>:`): `<id>` (quiz/predict/parsons/anim, own formats),
+`exercise:<label>` `{passed, at}` (a pass is never downgraded), `visited:<step>`, `complete`, `draft:<key>`.
+A step is done when all its checks passed (predict: answered; steps without checks: visited).
+Export file: `{format: "pycourse-progress", version: 1, exported_at, items: {key: string}}`, all
+`pycourse:v1:` keys. Import accepts only that format, only such keys, < 2 MB, after a confirm. Test: `tools/smoke_progress.py`.

@@ -87,3 +87,18 @@ body:has(.quiz.warmup:not(.submitted)) .exercise-cell::before {
 /* Error explanations (errors.js): unit texts stay hidden until a matching error occurs */
 .error-explain { display: none; }
 .error-help { margin: 0.5rem 0; padding: 0.5rem 0.75rem; border-left: 4px solid #b02a37; background: #fdf2f3; color: #212529; }
+
+/* Progress bar and panel (progress.js). Sticky under the fixed navbar; fixed row height, no layout jump. */
+.pc-progress { position: sticky; z-index: 900; background: #fff; border-bottom: 1px solid #ced4da; padding: 0.25rem 0 0.4rem; margin-bottom: 1rem; }
+.pc-count { margin: 0 0 0.2rem; font-size: 0.85rem; font-weight: 600; color: #212529; }
+.pc-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr)); gap: 0.25rem; }
+.pc-steps a { display: block; height: 3rem; padding: 0.15rem 0.35rem; border: 1px solid #ced4da; border-top: 4px solid #6c757d; border-radius: 0.25rem;
+  font-size: 0.75rem; line-height: 1.2; color: #212529; text-decoration: none; overflow: hidden; }
+.pc-steps .done a { border-top-color: #146c43; background: #d1e7dd; }
+.pc-state { display: block; font-weight: 600; color: #495057; }
+.pc-steps .done .pc-state { color: #0f5132; }
+.pc-steps a:focus-visible, .pc-panel button:focus-visible, .pc-panel input:focus-visible { outline: 3px solid #0b5ed7; outline-offset: 2px; }
+.pc-panel { max-width: 32rem; border: 1px solid #ced4da; border-radius: 0.5rem; padding: 1rem 1.5rem; }
+.pc-panel h2 { font-size: 1.25rem; margin-top: 0; }
+.pc-msg { font-weight: 600; min-height: 1.5em; }
+.pc-warn { color: #b02a37; font-weight: 600; }
