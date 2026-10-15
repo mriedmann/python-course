@@ -6,6 +6,7 @@ A self-paced Python course that runs in your browser. Nothing to install.
 
 ## Units
 
+- [U7 Functions: a reusable formula](units/07-functions/index.qmd)
 - [00 Demo: exercise mechanics](units/00-demo/index.qmd) (throwaway stack spike)
 
 ## Smoke tests

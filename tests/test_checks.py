@@ -49,3 +49,20 @@ def test_solution_passes_check(unit, label, code, monkeypatch):
         exec(compile(setup.read_text(encoding="utf-8"), str(setup), "exec"), ns)
     exec(compile(code, f"{unit / 'solution.py'}:{label}", "exec"), ns)
     getattr(load_checks(unit), f"check_{label}")(ns)
+
+
+SOLUTION_DIV = re.compile(r'::: \{\.solution exercise="(\w+)"\}\s*```python\n(.*?)```', re.DOTALL)
+
+
+def normalised(code: str) -> list[str]:
+    return [line.rstrip() for line in code.splitlines() if line.strip()]
+
+
+@pytest.mark.parametrize("unit", UNITS, ids=lambda u: u.name)
+def test_page_solutions_match_solution_py(unit):
+    """The browser runs the page's solution, pytest runs solution.py: they must be the same code."""
+    page = dict(SOLUTION_DIV.findall((unit / "index.qmd").read_text(encoding="utf-8")))
+    reference = solutions(unit)
+    assert set(page) == set(reference), "solution divs in index.qmd and solution.py sections differ"
+    for label, code in page.items():
+        assert normalised(code) == normalised(reference[label]), f"solution of {label} differs"

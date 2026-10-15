@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="760" height="300" role="img" aria-labelledby="t d" font-family="Arial, Helvetica, sans-serif" font-size="15">
+  <title id="t">Step 3: hand back the result</title>
+  <desc id="d">return value hands 2150.44 back to the line that made the call. The name tag first_value is now attached to 2150.44. The call is over: the tags row and value are gone. print shows 2150.44.</desc>
+  <rect width="760" height="300" fill="#ffffff"/>
+  <rect x="10" y="10" width="425" height="180" fill="#f6f6f6" stroke="#555"/>
+  <rect x="12" y="90" width="421" height="22" fill="#fff2b3"/>
+  <rect x="12" y="134" width="421" height="44" fill="#fff2b3"/>
+  <g font-family="Courier New, monospace" font-size="13" fill="#111">
+    <text x="20" y="40" fill="#555">def quote_value(row):</text>
+    <text x="51" y="62" fill="#555">"""Return the value in EUR of one quote line."""</text>
+    <text x="51" y="84" fill="#555">value = row["quantity"] * row["unit_price_eur"]</text>
+    <text x="51" y="106">return value</text>
+    <text x="20" y="150">first_value = quote_value(quotes[0])</text>
+    <text x="20" y="172">print(f"{first_value:.2f}")</text>
+  </g>
+  <text x="455" y="30" font-weight="bold" fill="#111">Name tags and values</text>
+  <rect x="455" y="40" width="110" height="30" rx="15" fill="#0b5394"/>
+  <text x="510" y="60" fill="#ffffff" text-anchor="middle" font-weight="bold">quote_value</text>
+  <line x1="565" y1="55" x2="585" y2="55" stroke="#111" stroke-width="2"/>
+  <rect x="585" y="40" width="165" height="30" fill="#ffffff" stroke="#111" stroke-width="2"/>
+  <text x="667" y="60" fill="#111" text-anchor="middle">function, input: row</text>
+  <rect x="455" y="80" width="110" height="30" rx="15" fill="#0b5394"/>
+  <text x="510" y="100" fill="#ffffff" text-anchor="middle" font-weight="bold">quotes</text>
+  <line x1="565" y1="95" x2="585" y2="95" stroke="#111" stroke-width="2"/>
+  <rect x="585" y="80" width="165" height="30" fill="#ffffff" stroke="#111" stroke-width="2"/>
+  <text x="667" y="100" fill="#111" text-anchor="middle">20 quote lines</text>
+  <rect x="455" y="120" width="110" height="30" rx="15" fill="#0b5394"/>
+  <text x="510" y="140" fill="#ffffff" text-anchor="middle" font-weight="bold">first_value</text>
+  <line x1="565" y1="135" x2="585" y2="135" stroke="#111" stroke-width="2"/>
+  <rect x="585" y="120" width="90" height="30" fill="#ffffff" stroke="#111" stroke-width="2"/>
+  <text x="630" y="140" fill="#111" text-anchor="middle">2150.44</text>
+  <rect x="450" y="160" width="300" height="45" fill="none" stroke="#555" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="460" y="188" fill="#333" font-size="14">call is over: row and value are gone</text>
+  <text x="10" y="235" fill="#111" font-weight="bold">3 Hand back the result and keep it</text>
+  <text x="10" y="260" fill="#111">return hands 2150.44 back to the calling line, where first_value is tagged on it.</text>
+  <text x="10" y="282" fill="#111">The names made inside the call vanish. print shows 2150.44.</text>
+</svg>
