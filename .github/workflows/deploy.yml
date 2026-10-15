@@ -28,6 +28,16 @@ jobs:
           du -sh site/_site
           test -f site/_site/data/quotes.csv
           test -f site/_site/sw-manifest.json
+      - name: Browser smoke tests (headless Chrome on the runner)
+        run: |
+          google-chrome --version
+          SKIP_RENDER=1 bash tools/smoke_all.sh
+      - name: Upload smoke logs
+        if: failure()
+        uses: actions/upload-artifact@v5
+        with:
+          name: smoke-logs
+          path: /tmp/smoke_*
       - uses: actions/upload-pages-artifact@v5
         with:
           path: site/_site
