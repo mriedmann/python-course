@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="760" height="300" role="img" aria-labelledby="t d" font-family="Arial, Helvetica, sans-serif" font-size="15">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 250" width="760" height="250" role="img" aria-labelledby="t d" font-family="Arial, Helvetica, sans-serif" font-size="15">
   <title id="t">Step 3: hand back the result</title>
   <desc id="d">return value hands 2150.44 back to the line that made the call. The name tag first_value is now attached to 2150.44. The call is over: the tags row and value are gone. print shows 2150.44.</desc>
-  <rect width="760" height="300" fill="#ffffff"/>
+  <rect width="760" height="250" fill="#ffffff"/>
   <rect x="10" y="10" width="425" height="180" fill="#f6f6f6" stroke="#555"/>
   <rect x="12" y="90" width="421" height="22" fill="#fff2b3"/>
   <rect x="12" y="134" width="421" height="44" fill="#fff2b3"/>
@@ -32,6 +32,4 @@
   <rect x="450" y="160" width="300" height="45" fill="none" stroke="#555" stroke-width="2" stroke-dasharray="7 5"/>
   <text x="460" y="188" fill="#333" font-size="14">call is over: row and value are gone</text>
   <text x="10" y="235" fill="#111" font-weight="bold">3 Hand back the result and keep it</text>
-  <text x="10" y="260" fill="#111">return hands 2150.44 back to the calling line, where first_value is tagged on it.</text>
-  <text x="10" y="282" fill="#111">The names made inside the call vanish. print shows 2150.44.</text>
 </svg>

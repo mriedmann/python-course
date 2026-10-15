@@ -87,7 +87,7 @@ down, then copy it again into every new sheet. If the rule changes, you hunt for
 **function** is that formula written once, with a name, clear inputs and one result. You call it
 wherever you need it, and you change it in one place.
 
-![A quote sheet where every row of the value column holds its own copy of the formula quantity x unit price.](why-sheet.svg){fig-alt="Spreadsheet with columns quote_id, quantity, unit_price_eur and value. The value cells hold =B2*C2, =B3*C3, =B4*C4: the same formula copied into every row."}
+![](why-sheet.svg){fig-alt="Spreadsheet with columns quote_id, quantity, unit_price_eur and value. The value cells hold =B2*C2, =B3*C3, =B4*C4: the same formula copied into every row."}
 
 ## Worked example {#worked .step}
 
@@ -107,7 +107,7 @@ Step through the animation. Watch the name tags.
 ::: {.anim #u7-anim}
 
 ::: {.frame title="1 Name the formula and list its inputs"}
-![Step 1: def stores the function under the name tag quote_value; nothing is computed.](anim/frame1.svg)
+![](anim/frame1.svg){fig-alt="Step 1: def stores the function under the name tag quote_value; nothing is computed."}
 
 Python reads the `def` block and stores the recipe under the name tag `quote_value`. Nothing is
 computed yet. The indented body runs only when someone calls the function.
@@ -122,7 +122,7 @@ parameter `row` becomes a second name tag on the argument `quotes[0]`. The body 
 :::
 
 ::: {.frame title="3 Hand back the result"}
-![Step 3: return hands 2150.44 back; first_value is tagged on it; row and value are gone.](anim/frame3.svg)
+![](anim/frame3.svg){fig-alt="Step 3: return hands 2150.44 back; first_value is tagged on it; row and value are gone."}
 
 `return value` hands 2150.44 back to the line that called. There `first_value` gets tagged on it.
 The call is over, so the names `row` and `value` are gone. `print` shows `2150.44`.
@@ -207,11 +207,13 @@ row_4 = {"quote_id": "Q2023-00004", "quantity": 2, "unit_price_eur": 9350.55}
 result = show_value(row_4)
 print(result)
 ```
-:::
 
+::: {.explain}
 The first line is `18701.1`: `print` inside the function shows the value. The second line is
 `None`. `print` only shows a value on the screen; it does not hand anything back. A function without
 `return` gives back `None`, Python's value for "nothing". If you want to keep a result, `return` it.
+:::
+:::
 
 ## Parsons problem {#parsons .step}
 
@@ -451,9 +453,9 @@ def quote_value(row):
 
 print(value)
 ```
-- [ ] It prints `computing`, then the value of a quote line.
+- [ ] It prints `computing`, then the value.
 - [ ] It prints `computing`, then fails with `NameError`.
-- [x] It fails with `NameError` and prints nothing else: the function is never called, and `value` exists only inside a call.
+- [x] It fails with `NameError` and prints nothing else.
 - [ ] It prints `None`.
 :::
 

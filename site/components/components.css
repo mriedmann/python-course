@@ -38,6 +38,8 @@ body:has(.quiz.warmup:not(.submitted)) .exercise-cell::before {
 
 /* Predict */
 .predict-actions { display: flex; gap: 1rem; align-items: center; margin: 0.5rem 0 1rem; }
+.predict .explain { display: none; }
+.predict.done .explain { display: block; }
 .predict-status { margin: 0; color: #495057; }
 .predict textarea { font-family: var(--bs-font-monospace); }
 .predict:not(.locked) .exercise-editor-btn-run-code { pointer-events: none; opacity: 0.5; }
