@@ -5,13 +5,20 @@
 #                `uv run python tools/fetch_pyodide.py`, which also reads `pyodide: packages` below).
 #                live.lua's default indexURL is the jsDelivr CDN; `pyodide: engine-url` below replaces it.
 #                The worker bundles the 0.28.1 loader and checks the version, so the copy must be 0.28.1.
+#   JupyterLite  jupyterlite-core 0.7.6 + jupyterlite-pyodide-kernel 0.7.2 (pyproject dev group), built into
+#                _site/workspace/ by tools/lite_build.py. The 0.7 kernel is made for Pyodide 0.29.3; no kernel
+#                release targets 0.28.x (0.6 = 0.27.6, 0.8 = 314.x). Its pyodideUrl points at our 0.28.1 copy
+#                (workspace/jupyter-lite.json), same Python 3.13 and wheel ABI; tools/smoke_workspace.py proves it.
 project:
   type: website
+  render:
+    - "**/*.qmd"  # not the units' make.ipynb: those are workspace notebooks
   resources:
     - components/*.js
     - sw.js
     - pyodide/*
   post-render:
+    - tools/lite_build.py  # JupyterLite workspace, before the manifest so the workspace is precached
     - tools/sw_manifest.py
 
 filters:
@@ -23,6 +30,8 @@ website:
     left:
       - href: index.qmd
         text: Home
+      - href: workspace/lab/index.html
+        text: Workspace
 
 
 format:

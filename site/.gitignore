@@ -1,2 +1,4 @@
 /.quarto/
 **/*.quarto_ipynb
+/workspace/.jupyterlite.doit.db*
+/workspace/pypi/
