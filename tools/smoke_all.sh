@@ -22,6 +22,7 @@ run() { # name command...
   run workshop sh -c "uv run python tools/build_workshop.py && uv run python tools/smoke_workshop.py"
   run offline uv run python tools/smoke_offline.py
   run thirdparty uv run python tools/smoke_thirdparty.py
+  run workspace uv run python tools/smoke_workspace.py
   run unit_u7 uv run python tools/smoke_unit.py units/07-functions/ \
     --raises "fix_order:is not defined" --predict 'u7-predict:18701.1\nNone'
 } | tee "$LOGS/table.txt"

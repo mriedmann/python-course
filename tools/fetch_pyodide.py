@@ -15,8 +15,13 @@ from pathlib import Path
 
 VERSION = "0.28.1"  # keep equal to the version pinned in site/_quarto.yml
 BASE = f"https://cdn.jsdelivr.net/pyodide/v{VERSION}/full/"
-CORE = ["pyodide.mjs", "pyodide.asm.js", "pyodide.asm.wasm", "python_stdlib.zip", "pyodide-lock.json"]
+CORE = ["pyodide.mjs", "pyodide.js", "pyodide.asm.js", "pyodide.asm.wasm", "python_stdlib.zip", "pyodide-lock.json"]
 EXTRAS = ["micropip", "pyodide-http", "ipython"]  # installed by quarto-live (live.lua setupPyodide); only list
+# pyodide.js: the classic loader for the JupyterLite kernel (its .mjs path is broken in kernel 0.7.2).
+# Pure-Python wheels the JupyterLite kernel installs that Pyodide 0.28.1 does not ship (else piplite asks PyPI);
+# they go to site/workspace/pypi/ (gitignored), which site/tools/lite_build.py indexes for piplite.
+PYPI = {"comm-0.2.3-py3-none-any.whl": ("https://files.pythonhosted.org/packages/60/97/"
+        "891a0971e1e4a8c5d2b20bbe0e524dc04548d2307fee33cdeba148fd4fc7/", "c615d91d75f7f04f095b30d1c1711babd43bdc6419c1be9886a85f2f4e489417")}
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "site" / "pyodide"
 
@@ -37,12 +42,12 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def get(name: str, sha: str | None) -> bool:
-    """Download `name` unless present with matching hash. Returns True if downloaded."""
-    dest = OUT / name
+def get(name: str, sha: str | None, base: str = BASE, out: Path = OUT) -> bool:
+    """Download base + `name` into `out` unless present with matching hash. Returns True if downloaded."""
+    dest = out / name
     if dest.exists() and (sha is None or sha256(dest) == sha):
         return False
-    with urllib.request.urlopen(BASE + name) as r:
+    with urllib.request.urlopen(base + name) as r:
         data = r.read()
     if sha and hashlib.sha256(data).hexdigest() != sha:
         raise SystemExit(f"sha256 mismatch for {name}")
@@ -74,7 +79,9 @@ def main() -> None:
     jobs["pyodide-lock.json"] = None
     with ThreadPoolExecutor(6) as pool:
         downloaded = sum(pool.map(lambda kv: get(*kv), jobs.items()))
-    print(f"{len(jobs)} files in {OUT.relative_to(ROOT)}, {downloaded} downloaded ({len(wheels)} wheels)")
+    (PIPLITE := ROOT / "site" / "workspace" / "pypi").mkdir(exist_ok=True)
+    downloaded += sum(get(name, sha, base, PIPLITE) for name, (base, sha) in PYPI.items())
+    print(f"{len(jobs)} + {len(PYPI)} files in {OUT.relative_to(ROOT)}, {downloaded} downloaded ({len(wheels)} wheels)")
 
 
 if __name__ == "__main__":

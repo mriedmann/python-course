@@ -1,0 +1,5 @@
+{
+  "@jupyterlab/notebook-extension:panel": {
+    "toolbar": [{ "name": "restart-and-run", "label": "Restart & Run All" }]
+  }
+}
