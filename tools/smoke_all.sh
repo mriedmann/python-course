@@ -15,6 +15,7 @@ run() { # name command...
   run drafts uv run python tools/smoke_drafts.py
   run components uv run python tools/smoke_components.py
   run errors uv run python tools/smoke_errors.py
+  run stepper uv run python tools/smoke_stepper.py
   run pages uv run python tools/smoke_pages.py
   run offline uv run python tools/smoke_offline.py
   run thirdparty uv run python tools/smoke_thirdparty.py
