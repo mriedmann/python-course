@@ -37,13 +37,13 @@ jobs:
       - name: Browser smoke tests (headless Chrome on the runner)
         run: |
           google-chrome --version
-          SKIP_RENDER=1 bash tools/smoke_all.sh
+          SKIP_RENDER=1 SMOKE_LOG_DIR=/tmp/smoke-logs bash tools/smoke_all.sh
       - name: Upload smoke logs
         if: failure()
         uses: actions/upload-artifact@v5
         with:
           name: smoke-logs
-          path: /tmp/smoke_*
+          path: /tmp/smoke-logs
       - uses: actions/upload-pages-artifact@v5
         with:
           path: site/_site
