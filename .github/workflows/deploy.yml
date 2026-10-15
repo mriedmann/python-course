@@ -22,7 +22,7 @@ jobs:
       - uses: quarto-dev/quarto-actions/setup@v2
         with:
           version: 1.10.19
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: site/pyodide
           key: pyodide-0.28.1-${{ hashFiles('site/_quarto.yml', 'tools/fetch_pyodide.py') }}
