@@ -39,6 +39,11 @@ quarto-live 0.2.0 cannot interrupt Pyodide) and `errors.js` (when a cell raises:
 a plain-language explanation above the traceback of the learner's own code). Not shortcodes;
 nothing to write per unit.
 
+**Stepper** (`components/stepper.js` + `stepper.py`): a "Step through" button next to Run on every
+editor. It traces the editor's code (after the exercise's hidden setup, which is not stepped and whose
+objects stay collapsed) in a fresh namespace, max 500 steps, and shows the line, frames with name tags,
+objects by `#n` (shared references) and output. Test: `uv run python tools/smoke_stepper.py`.
+
 **Unit-specific error explanations** (optional). A hidden div replaces the generic explanation when
 an error of type `exception` whose message contains `match` (optional) occurs anywhere on the page.
 The build fails without `exception`. Use it for the exercise that starts from a real error (P5).

@@ -124,3 +124,29 @@ html.presenter .instructor-badge { font-size: 0.875rem; }
 .pc-panel h2 { font-size: 1.25rem; margin-top: 0; }
 .pc-msg { font-weight: 600; min-height: 1.5em; }
 .pc-warn { color: #b02a37; font-weight: 600; }
+
+/* Stepper (stepper.js): name tags point at values; objects carry a #number shared by every name on them. */
+.stepper { border: 1px solid #ced4da; border-radius: 0.5rem; padding: 0.75rem; margin: 0 0 1rem; }
+.stepper-controls { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+.stepper-controls input[type=range] { flex: 1 1 8rem; min-width: 6rem; }
+.stepper button:focus-visible, .stepper input:focus-visible { outline: 3px solid #0b5ed7; outline-offset: 2px; }
+.stepper-count, .stepper-muted { color: #495057; font-size: 0.875rem; }
+.stepper-status { font-weight: 600; margin: 0.5rem 0; }
+.stepper-body { display: flex; flex-wrap: wrap; gap: 1rem; }
+.stepper-code { flex: 1 1 18rem; min-width: 0; margin: 0; padding: 0.5rem 0 0.5rem 2.5rem; background: #f8f9fa;
+  border-radius: 0.25rem; font-size: 0.85rem; overflow-x: auto; }
+.stepper-code li { white-space: pre; color: #495057; }
+.stepper-code li code { color: #212529; background: none; padding: 0; }
+.stepper-code li.current { background: #fff3cd; font-weight: 700; list-style-type: "▶ "; }
+.stepper-state { flex: 1 1 16rem; min-width: 0; }
+.stepper-state h4 { font-size: 0.95rem; margin: 0.75rem 0 0.25rem; }
+.stepper table { border-collapse: collapse; margin-bottom: 0.5rem; font-size: 0.875rem; }
+.stepper caption { caption-side: top; text-align: left; color: #212529; font-weight: 600; padding: 0.25rem 0; }
+.stepper-frame { border: 2px solid #495057; }
+.stepper th, .stepper td { padding: 0.15rem 0.5rem; border-bottom: 1px solid #dee2e6; text-align: left; vertical-align: top; }
+.stepper-tag { display: inline-block; border: 1px solid #495057; border-radius: 0.75rem; padding: 0 0.5rem; background: #e7f1ff; font-family: var(--bs-font-monospace); }
+.stepper-ref { color: #084298; font-weight: 600; }
+.stepper-obj { border: 1px solid #ced4da; border-radius: 0.25rem; padding: 0.25rem 0.5rem; margin-bottom: 0.5rem; }
+.stepper-obj-head { margin: 0 0 0.25rem; font-weight: 600; color: #084298; }
+.stepper-out { background: #f8f9fa; padding: 0.25rem 0.5rem; font-size: 0.85rem; max-height: 12rem; overflow: auto; }
+.stepper-note { color: #b02a37; font-weight: 600; margin: 0.5rem 0 0.25rem; }

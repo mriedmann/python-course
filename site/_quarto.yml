@@ -9,6 +9,7 @@ project:
   type: website
   resources:
     - components/*.js
+    - components/stepper.py
     - sw.js
     - pyodide/*
   post-render:
@@ -32,7 +33,7 @@ format:
   live-html:
     theme: [cosmo, theme.scss]
     css: components/components.css
-    # Error explanations, exercise ladder (solution gate), Stop button and lesson components on every
+    # Error explanations, solution gate, Stop and Step-through buttons and lesson components on every
     # page; path via Quarto's page offset.
     # Instructor mode flag, set before first paint so nothing flashes (see components/instructor.js).
     include-in-header:
@@ -56,7 +57,7 @@ format:
               const root = new URL(document.querySelector('meta[name="quarto:offset"]').content, location.href);
               navigator.serviceWorker.register(new URL("sw.js", root), { scope: root.pathname }).catch(console.error);
             }
-            for (const f of ["errors.js", "ladder.js", "stop.js", "drafts.js", "quiz.js", "predict.js", "parsons.js", "anim.js", "instructor.js", "progress.js"]) {
+            for (const f of ["errors.js", "ladder.js", "stop.js", "drafts.js", "quiz.js", "predict.js", "parsons.js", "anim.js", "instructor.js", "progress.js", "stepper.js"]) {
               const s = document.createElement("script");
               s.src = document.querySelector('meta[name="quarto:offset"]').content + "components/" + f;
               document.body.appendChild(s);
