@@ -1,0 +1,49 @@
+---
+title: "Smoke test: pandas in the browser"
+engine: markdown
+description: "Not a unit. Checks pandas, matplotlib and the cp1252 customer file in Pyodide."
+resources:
+  - ../data/quotes.csv
+  - ../data/customers.csv
+---
+
+Technical check, not course content: the cells run on page load and the last one prints a summary line.
+
+```{pyodide}
+#| autorun: true
+#| caption: Load
+import pandas as pd
+quotes = pd.read_csv("data/quotes.csv", sep=";", decimal=",")
+customers = pd.read_csv("data/customers.csv", sep=";", encoding="cp1252")
+print(quotes.head())
+print(customers.head())
+print([n for n in customers["customer_name"] if not n.isascii()][:3])
+```
+
+```{pyodide}
+#| autorun: true
+#| caption: Groupby and merge
+quotes["value"] = quotes["quantity"] * quotes["unit_price_eur"]
+by_region = quotes.groupby("region")["value"].sum()
+merged = quotes.merge(customers, on="customer_id")
+print(by_region.round(0))
+print(merged.groupby("segment")["value"].sum().round(0))
+```
+
+```{pyodide}
+#| autorun: true
+#| caption: Chart
+import matplotlib.pyplot as plt
+by_region.plot.bar()
+plt.xlabel("Region")
+plt.ylabel("Quote value (EUR)")
+plt.title("Quote value by region")
+plt.show()
+```
+
+```{pyodide}
+#| autorun: true
+#| caption: Summary
+ok = "Chemiewerk Süd AG" in set(customers["customer_name"])
+print(f"SMOKE pandas rows={len(quotes)} customers={len(customers)} cp1252_ok={ok} merge_rows={len(merged)}")
+```

@@ -1,0 +1,79 @@
+---
+title: "Demo: exercise mechanics"
+engine: markdown
+description: "Throwaway stack-spike page (T1). Delete when U7 exists."
+resources:
+  - checks.py
+  - ../../data/quotes.csv
+---
+
+The hidden setup gives you `quotes`: the first 20 Fluvia quote lines, one dict per line.
+
+## Exercise: net value of a quote line
+
+Compute the net value in EUR of the first quote line `quotes[0]` and store it in `net_value`.
+
+```{pyodide}
+#| exercise: net_value
+q = quotes[0]
+net_value = ______
+net_value
+```
+
+```{pyodide}
+#| exercise: net_value
+#| setup: true
+{{< include setup.py >}}
+```
+
+```{pyodide}
+#| exercise: net_value
+#| check: true
+{{< include ../../components/check.py >}}
+```
+
+::: {.hint exercise="net_value"}
+Start with the gross value: how many pieces, at what price each?
+:::
+
+::: {.hint exercise="net_value"}
+The discount is stored in percent. Turn it into a factor first.
+:::
+
+::: {.hint exercise="net_value"}
+A discount of 3 % leaves 97 % of the gross value: `1 - discount_pct / 100`.
+:::
+
+::: {.solution exercise="net_value"}
+```python
+q = quotes[0]
+net_value = q["quantity"] * q["unit_price_eur"] * (1 - q["discount_pct"] / 100)
+```
+:::
+
+## A runaway loop
+
+Run this cell, then press **Stop**.
+
+```{pyodide}
+#| caption: Runaway loop
+while True:
+    pass
+```
+
+## Quote values as a chart
+
+```{pyodide}
+#| autorun: true
+#| caption: Chart
+import matplotlib.pyplot as plt
+import csv
+
+with open("data/quotes.csv", encoding="utf-8", newline="") as f:
+    rows = list(csv.DictReader(f, delimiter=";"))[:20]
+values = [int(r["quantity"]) * float(r["unit_price_eur"].replace(",", ".")) for r in rows]
+plt.bar([r["quote_id"][-3:] for r in rows], values)
+plt.ylabel("Gross value (EUR)")
+plt.title("First 20 Fluvia quote lines")
+plt.show()
+```

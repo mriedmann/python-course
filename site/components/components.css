@@ -1,0 +1,85 @@
+/* Lesson components: quiz, predict, Parsons, animation (components.lua + *.js). Colours meet WCAG AA
+   on white: pass #146c43, fail #b02a37, neutral #495057. */
+.quiz, .predict, .parsons, .anim {
+  border: 1px solid #ced4da;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+:is(.quiz, .predict, .parsons) .pass { color: #146c43; font-weight: 600; }
+:is(.quiz, .predict, .parsons) .fail { color: #b02a37; font-weight: 600; }
+.quiz button:focus-visible, .predict button:focus-visible, .parsons button:focus-visible, .anim button:focus-visible,
+.quiz input:focus-visible, .predict textarea:focus-visible {
+  outline: 3px solid #0b5ed7;
+  outline-offset: 2px;
+}
+
+/* Quiz */
+.quiz .question { margin-bottom: 1rem; }
+.quiz-tags { float: right; font-size: 0.75rem; color: #495057; }
+.quiz-options { list-style: none; padding-left: 0.5rem; }
+.quiz-options label { cursor: pointer; }
+.quiz-options input { margin-right: 0.25rem; }
+.quiz.submitted .quiz-answer { background: #d1e7dd; border-radius: 0.25rem; }
+.quiz-short input { margin-left: 0.25rem; }
+.quiz-actions { display: flex; gap: 1rem; align-items: center; }
+.quiz-score { margin: 0; font-weight: 600; }
+
+/* Warm-up gate: live cells stay hidden until the warm-up quiz is submitted (docs/04 step 1). */
+body:has(.quiz.warmup:not(.submitted)) .exercise-cell > * { display: none; }
+body:has(.quiz.warmup:not(.submitted)) .exercise-cell::before {
+  content: "Finish the warm-up first";
+  display: block;
+  padding: 0.75rem;
+  border: 1px dashed #6c757d;
+  border-radius: 0.5rem;
+  color: #495057;
+}
+
+/* Predict */
+.predict-actions { display: flex; gap: 1rem; align-items: center; margin: 0.5rem 0 1rem; }
+.predict .explain { display: none; }
+.predict.done .explain { display: block; }
+.predict-status { margin: 0; color: #495057; }
+.predict textarea { font-family: var(--bs-font-monospace); }
+.predict:not(.locked) .exercise-editor-btn-run-code { pointer-events: none; opacity: 0.5; }
+.predict-verdict.fail { color: #495057; } /* neutral: "Compare: what differs?" */
+.predict-compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.predict-compare pre { background: #f8f9fa; padding: 0.5rem; white-space: pre-wrap; }
+
+/* Parsons */
+.parsons-lists { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.parsons-heading { font-weight: 600; margin-bottom: 0.25rem; }
+.parsons-list {
+  list-style: none;
+  padding: 0.25rem;
+  margin: 0;
+  min-height: 3rem;
+  border: 1px dashed #6c757d;
+  border-radius: 0.25rem;
+}
+.parsons-line {
+  display: block;
+  width: calc(100% - var(--indent, 0) * 2em);
+  margin: 0.15rem 0 0.15rem calc(var(--indent, 0) * 2em);
+  padding: 0.25rem 0.5rem;
+  text-align: left;
+  font-family: var(--bs-font-monospace);
+  font-size: 0.875rem;
+  white-space: pre;
+  overflow-x: auto;
+  background: #f8f9fa;
+  color: #212529;
+  border: 1px solid #adb5bd;
+  border-radius: 0.25rem;
+  cursor: grab;
+}
+.parsons-keys { font-size: 0.85rem; color: #495057; margin: 0.5rem 0; }
+.parsons-actions { display: flex; gap: 1rem; align-items: center; }
+.parsons-result { margin: 0; }
+
+/* Animation */
+.anim-stage .frame img { display: block; max-width: 100%; margin-bottom: 0.5rem; }
+.anim-controls { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin: 0.5rem 0; }
+.anim-label { margin: 0 0 0 0.5rem; color: #495057; }
+.anim > .btn { margin-top: 0.5rem; }
