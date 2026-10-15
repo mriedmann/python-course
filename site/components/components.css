@@ -87,3 +87,25 @@ body:has(.quiz.warmup:not(.submitted)) .exercise-cell::before {
 /* Error explanations (errors.js): unit texts stay hidden until a matching error occurs */
 .error-explain { display: none; }
 .error-help { margin: 0.5rem 0; padding: 0.5rem 0.75rem; border-left: 4px solid #b02a37; background: #fdf2f3; color: #212529; }
+
+/* Instructor mode (instructor.js; class on <html> set by the include-in-header snippet): no spoilers.
+   display:none keeps hidden things out of the keyboard order. */
+html.instructor :is(.exercise-hint, .exercise-solution, .predict .explain, .anim .reveal,),
+html.instructor .btn-exercise-editor:is([aria-label*="Hint"], [aria-label*="Solution"], .btn-exercise-solution),
+html.instructor .anim > .btn { display: none !important; }
+html.instructor .quiz.submitted .quiz-answer { background: none; }
+/* The trainer runs the room: lift the warm-up gate. */
+html.instructor body:has(.quiz.warmup:not(.submitted)) .exercise-cell > * { display: revert; }
+html.instructor body:has(.quiz.warmup:not(.submitted)) .exercise-cell::before { display: none; }
+.instructor-badge {
+  position: fixed; right: 0.75rem; bottom: 0.75rem; z-index: 1050;
+  display: flex; gap: 0.5rem; align-items: center;
+  padding: 0.35rem 0.6rem; border-radius: 0.5rem;
+  background: #212529; color: #fff; font-size: 0.875rem; font-weight: 600;
+}
+.instructor-badge button[aria-pressed="true"] { background: #ffc107; border-color: #ffc107; color: #000; }
+.instructor-badge button:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+/* Presenter: projector sizes for text and editors. */
+html.presenter body { font-size: 150%; }
+html.presenter .cm-editor, html.presenter .cm-content { font-size: 150%; }
+html.presenter .instructor-badge { font-size: 0.875rem; }
