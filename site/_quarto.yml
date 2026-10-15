@@ -1,16 +1,16 @@
 # Pinned stack (AGENTS.md rule 3). Change only via an explicit task + decision-log entry.
 #   Quarto CLI   1.10.19
 #   quarto-live  v0.2.0 (`quarto add r-wasm/quarto-live@v0.2.0`; its _extension.yml still says 0.1.3-dev)
-#   Pyodide      0.28.1 (full distribution), hard-coded in _extensions/r-wasm/live/live.lua (setupPyodide):
-#                indexURL https://cdn.jsdelivr.net/pyodide/v0.28.1/full/
-#                Packages (plus micropip, pyodide_http, ipython) resolve via <indexURL>/pyodide-lock.json.
-#                Self-hosting: set `pyodide: engine-url: <same-origin indexURL>` below. The worker bundles
-#                the 0.28.1 loader and checks the version, so the copy must be Pyodide 0.28.1.
+#   Pyodide      0.28.1 (full distribution), self-hosted in site/pyodide/ (gitignored; fill it with
+#                `uv run python tools/fetch_pyodide.py`, which also reads `pyodide: packages` below).
+#                live.lua's default indexURL is the jsDelivr CDN; `pyodide: engine-url` below replaces it.
+#                The worker bundles the 0.28.1 loader and checks the version, so the copy must be 0.28.1.
 project:
   type: website
   resources:
     - components/*.js
     - sw.js
+    - pyodide/*
   post-render:
     - tools/sw_manifest.py
 
@@ -27,7 +27,7 @@ website:
 
 format:
   live-html:
-    theme: cosmo
+    theme: [cosmo, theme.scss]
     css: components/components.css
     # Exercise ladder (solution gate), Stop button and lesson components on every page; path via
     # Quarto's page offset.
@@ -47,6 +47,12 @@ format:
           </script>
 
 pyodide:
+  # engine-url is resolved by the Pyodide worker with `new URL(value, location)`. The worker is a normal
+  # module worker (not a blob), so `location` is .../site_libs/quarto-contrib/live-runtime/pyodide-worker.js,
+  # always three directories below the site root. A relative value therefore works on Pages (/python-course/),
+  # locally (/) and in the offline package, with no host or build-time path. Breaks only if Quarto moves
+  # the live-runtime folder (the smoke tests would catch it).
+  engine-url: ../../../pyodide/
   # quarto-live installs these with micropip from the Pyodide indexURL before the first cell is ready.
   packages:
     - pandas
