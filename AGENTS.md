@@ -8,8 +8,8 @@ change. The specification in `docs/` is the source of truth for *what* to build;
 
 A self-paced, zero-install Python course that runs in the browser (Quarto + quarto-live + Pyodide),
 hosted on GitHub Pages from `github.com/mriedmann/python-course`
-(<https://mriedmann.github.io/python-course/>). Current phase: **Phase 1 PoC**, exit at gate
-**G-A** (`docs/05_roadmap_and_poc.md`). Read the docs in order the first time:
+(<https://mriedmann.github.io/python-course/>). Current phase: **Phase 2 platform**, exit at gate
+**G-B** (`docs/05_roadmap_and_poc.md`; G-A passed, see `docs/reports/g-a_report.md`). Read the docs in order the first time:
 
 | Read when you work on… | Document |
 | --- | --- |
@@ -68,7 +68,9 @@ Report back: summary, files changed, verification output, open issues/deviations
 
 ### Worker loop
 
-1. `git switch poc/g-a && git switch -c poc/<slug>` (or use the base/branch named in the brief).
+1. Work on the branch named in the brief, branched from the phase integration branch. Parallel workers
+   get a git worktree **next to** the repo (`../python_course-<slug>`), never under `.claude/`:
+   Quarto silently renders nothing when the path contains a dot-directory.
 2. Read the context listed in the brief. Load the `ponytail` skill; load `quarto-authoring` for any
    `.qmd`/`_quarto.yml` work.
 3. Implement the smallest change that meets every acceptance criterion.
@@ -82,7 +84,7 @@ Report back: summary, files changed, verification output, open issues/deviations
 - Review with the `ponytail-review` skill (correct, safe, tested, lean) plus the task's acceptance
   criteria and, for units, the Unit Definition of Done (`docs/02`).
 - Re-run verification locally, then merge the task branch into the phase integration branch
-  (`poc/g-a` in phase 1) with `git merge --no-ff`.
+  (`poc/g-a` in phase 1, `p2/g-b` in phase 2) with `git merge --no-ff`.
 - Only the **course owner merges into `main`** (via PR from the integration branch). A push to
   `main` deploys to Pages. Agents never merge into `main` themselves.
 
@@ -93,7 +95,7 @@ site/                     Quarto project
   _quarto.yml             site config, pinned quarto-live/Pyodide, package list
   _extensions/            quarto-live (pinned, committed)
   components/             quiz, predict, parsons shortcodes (Lua + JS + CSS, vanilla)
-  units/07-functions/     index.qmd, checks.py, solution.py, anim/
+  units/07-functions/     index.qmd, setup.py, checks.py, solution.py, anim/
   smoke/                  pandas smoke page, web (CORS) smoke page
   sw.js                   service worker (offline)
 tests/                    pytest: solutions vs checks, front-matter lint
@@ -112,6 +114,7 @@ quarto render site                        # build to site/_site
 quarto preview site --no-browser          # live preview
 uv run python -m http.server -d site/_site 8000   # serve the build (service workers need http://, not file://)
 uv run python tools/<script>.py           # measurement / helper scripts
+bash tools/smoke_all.sh                   # render + all headless-browser smoke suites
 ```
 
 Browser automation: Python Playwright with the installed Chrome
@@ -120,8 +123,8 @@ throttling (50 Mbit/s) via a CDP session: `Network.emulateNetworkConditions`.
 
 ## 6. Git conventions
 
-- Branches: `poc/<slug>`, one task per branch, merged `--no-ff` into the integration branch
-  `poc/g-a`; the course owner merges `poc/g-a` into `main` via PR.
+- Branches: `<phase>/<slug>` (`poc/…`, `p2/…`), one task per branch, merged `--no-ff` into the phase
+  integration branch (`p2/g-b`); the course owner merges it into `main` via PR.
 - Commit messages: imperative, ≤ 72-char subject, body says *why*. Reference IDs where useful
   (`U7`, `G-A`, `R15`). Agents append the attribution trailer given by their harness.
 - Never commit `site/_site/`, `.quarto/`, `.venv/`, downloaded Pyodide tarballs outside the
