@@ -18,7 +18,7 @@ import sys
 
 from playwright.sync_api import expect, sync_playwright
 
-from smoke_browser import RUN_READY, SITE, TIMEOUT_MS, grade_of, open_page, run_cell, serve, submit_quiz
+from smoke_browser import RUN_READY, SITE, TIMEOUT_MS, add_target_args, grade_of, launch, open_page, run_cell, site_url, submit_quiz
 
 LABEL_JS = """cell => {
   const s = document.querySelector(`script[type="${cell.id}-contents"]`);
@@ -120,17 +120,18 @@ def main() -> int:
     parser.add_argument("path", help="page path inside site/_site, e.g. units/07-functions/")
     parser.add_argument("--raises", action="append", default=[], metavar="LABEL:TEXT")
     parser.add_argument("--predict", action="append", default=[], metavar="ID:TEXT")
+    add_target_args(parser)
     args = parser.parse_args()
     raises = dict(item.split(":", 1) for item in args.raises)
     predicts = {k: v.replace("\\n", "\n") for k, v in (item.split(":", 1) for item in args.predict)}
 
     failures = 0
     with sync_playwright() as p:
-        browser = p.chromium.launch(channel="chrome", headless=True)
+        browser = launch(p, args)
         page = browser.new_page()
         page.add_init_script(LISTEN)
         try:
-            url = serve() + args.path
+            url = site_url(args) + args.path
             print(f"first Python cell ready after {open_page(page, url):.1f} s; warm-up passed, cells visible")
             assert {b.get_attribute("id") for b in page.locator(".predict").all()} == set(predicts), \
                 "pass --predict ID:TEXT for every predict box on the page"

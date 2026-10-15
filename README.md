@@ -5,8 +5,8 @@ business background, strong spreadsheet skills and **no programming experience**
 variable to cleaning, aggregating and plotting real-looking plant and sales data with pandas.
 Python runs locally in the browser via WebAssembly (Pyodide), so learners install nothing.
 
-Status (15 Oct 2026): specification complete, ready for the first proof of concept (PoC).
-See `docs/05_roadmap_and_poc.md` for what the PoC must prove and how to start it.
+Status (15 Oct 2026): PoC done, gate G-A passed (`docs/reports/g-a_report.md`). Next: phase 2
+(platform). Live site: <https://mriedmann.github.io/python-course/>.
 
 ## Document map
 
@@ -62,5 +62,5 @@ The cleaning exercises depend on it; the data card lists every item.
 
 ## Next step
 
-Start the PoC described in `docs/05_roadmap_and_poc.md`: a Quarto + quarto-live + Pyodide site with
-one complete unit (U7 Functions) and a pandas smoke test, measured against gate G-A.
+Phase 2 (platform) in `docs/05_roadmap_and_poc.md`; start with the must-fix list in
+`docs/reports/g-a_report.md`. Agent workflow: `AGENTS.md`.

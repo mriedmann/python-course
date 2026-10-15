@@ -42,6 +42,21 @@ def serve() -> str:
     return f"http://127.0.0.1:{server.server_port}/"
 
 
+def add_target_args(parser) -> None:
+    parser.add_argument("--base-url", help="deployed site root, e.g. https://mriedmann.github.io/python-course/ (skips the local server)")
+    parser.add_argument("--browser", choices=["chrome", "firefox"], default="chrome")
+
+
+def site_url(args) -> str:
+    return args.base_url.rstrip("/") + "/" if args.base_url else serve()
+
+
+def launch(p, args):
+    if args.browser == "firefox":
+        return p.firefox.launch(headless=True)
+    return p.chromium.launch(channel="chrome", headless=True)
+
+
 def open_page(page, url: str) -> float:
     t0 = time.monotonic()
     page.goto(url, wait_until="domcontentloaded")
@@ -149,11 +164,12 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("path", help="page path inside site/_site, e.g. units/00-demo/")
     parser.add_argument("--mechanics", action="store_true")
+    add_target_args(parser)
     args = parser.parse_args()
 
-    url = serve() + args.path
+    url = site_url(args) + args.path
     with sync_playwright() as p:
-        browser = p.chromium.launch(channel="chrome", headless=True)
+        browser = launch(p, args)
         page = browser.new_page()
         try:
             print(f"first Python cell ready after {open_page(page, url):.1f} s")

@@ -1,6 +1,6 @@
 """Offline smoke test: first visit installs the service worker, then the page must work with the network off.
 
-Usage:  uv run python tools/smoke_offline.py [units/00-demo/]
+Usage:  uv run python tools/smoke_offline.py [units/00-demo/] [--base-url URL] [--browser firefox]
 
 Serves site/_site under /python-course/ (like GitHub Pages), waits for the service worker to be active
 (= precache complete), goes offline, reloads and checks: Pyodide ready, exercise check passes, and
@@ -8,6 +8,7 @@ Serves site/_site under /python-course/ (like GitHub Pages), waits for the servi
 Exit code 1 on any failure.
 """
 
+import argparse
 import functools
 import http.server
 import sys
@@ -15,7 +16,7 @@ import threading
 import time
 
 from playwright.sync_api import expect, sync_playwright
-from smoke_browser import BUSY, RUN_READY, SITE, TIMEOUT_MS, grade_of, open_page, run_cell
+from smoke_browser import BUSY, RUN_READY, SITE, TIMEOUT_MS, add_target_args, grade_of, launch, open_page, run_cell
 
 PREFIX = "/python-course/"
 
@@ -45,10 +46,13 @@ CACHE_STATS = """async () => {
 
 
 def main() -> int:
-    path = sys.argv[1] if len(sys.argv) > 1 else "units/00-demo/"
-    url = serve() + path
+    parser = argparse.ArgumentParser()
+    parser.add_argument("path", nargs="?", default="units/00-demo/")
+    add_target_args(parser)
+    args = parser.parse_args()
+    url = (args.base_url.rstrip("/") + "/" if args.base_url else serve()) + args.path
     with sync_playwright() as p:
-        browser = p.chromium.launch(channel="chrome", headless=True)
+        browser = launch(p, args)
         context = browser.new_context()
         page = context.new_page()
         try:
