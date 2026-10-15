@@ -5,7 +5,7 @@ Usage:  uv run python tools/smoke_unit.py units/07-functions/ [--raises LABEL:TE
 
 Walks the page like a learner: warm-up quiz (answered from the DOM, score must be full), then for each quarto-live exercise: insert the page's own solution, run the check, assert it
 passes. With --raises, first run that exercise's starting code and assert the output shows the
-error text, e.g. "fix_order:is not defined" (the "starts from a real traceback" exercise, P5;
+error text and that its check fails, e.g. "fix_order:is not defined" (the "starts from a real traceback" exercise, P5;
 quarto-live 0.2.0 shows the error message without its type name). Then: every animation to its last frame ("Show me the code"), each --predict (correct text passes; on
 a fresh context a wrong text fails; `\\n` = newline), every Parsons problem solved by keyboard (solution
 read from the unit's index.qmd), every exit quiz. Each must emit pycourse:result passed=true, and a
@@ -151,10 +151,15 @@ def main() -> int:
                         ok = True
                     except AssertionError:
                         ok = False
-                    failures += not ok
                     print(f"{label}: starting code raises {raises[label]}: {'yes' if ok else 'NO'}")
                     if not ok:
                         print(f"  output was: {cell.inner_text()[len(start):].strip()[:300]!r}")
+                    # The error shows before this run's check has finished; its late grade would be
+                    # read as the solution's. Wait for it: the run is over once it is graded.
+                    result, message = grade_of(cell)
+                    ok = ok and result == "fail"
+                    failures += not ok
+                    print(f"{label}: starting code fails the check: {result}: {message.strip()!r}")
                 solution = page.locator(f'.exercise-solution[data-exercise="{label}"] code').first.text_content()
                 run_cell(page, cell, solution)
                 result, message = grade_of(cell)
