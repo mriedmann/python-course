@@ -7,11 +7,12 @@ pass and fail), animation (reveal gate), then a reload must restore every state 
 Exit code 1 on any failure.
 """
 
+import argparse
 import sys
 
 from playwright.sync_api import expect, sync_playwright
 
-from smoke_browser import RUN_READY, TIMEOUT_MS, serve
+from smoke_browser import RUN_READY, TIMEOUT_MS, add_target_args, launch, site_url
 
 PAGE = "units/00-demo/components.html"
 # Collects pycourse:result events into window.results (survives nothing: re-added on each load).
@@ -117,9 +118,12 @@ def restored(page) -> None:
 
 
 def main() -> int:
-    url = serve() + PAGE
+    parser = argparse.ArgumentParser()
+    add_target_args(parser)
+    args = parser.parse_args()
+    url = site_url(args) + PAGE
     with sync_playwright() as p:
-        browser = p.chromium.launch(channel="chrome", headless=True)
+        browser = launch(p, args)
         page = browser.new_page()
         page.add_init_script(LISTEN)
         try:
