@@ -107,5 +107,5 @@ html.instructor body:has(.quiz.warmup:not(.submitted)) .exercise-cell::before { 
 .instructor-badge button:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
 /* Presenter: projector sizes for text and editors. */
 html.presenter body { font-size: 150%; }
-html.presenter .cm-editor, html.presenter .cm-content { font-size: 150%; }
+html.presenter .cm-content { font-size: 150%; }
 html.presenter .instructor-badge { font-size: 0.875rem; }

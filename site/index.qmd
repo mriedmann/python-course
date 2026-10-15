@@ -4,6 +4,8 @@ title: "Python for Fluvia analysts"
 
 A self-paced Python course that runs in your browser. Nothing to install.
 
+Trainers: add `?instructor` to any page address to hide hints and solutions and get a Presenter toggle for large text (`?instructor=0` switches it off).
+
 ## Units
 
 - [U7 Functions: a reusable formula](units/07-functions/index.qmd)

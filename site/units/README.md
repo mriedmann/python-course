@@ -101,3 +101,10 @@ skill, misconception and retrieved-unit IDs exist in `docs/01`/`docs/03`; durati
 tags span two retrieved units; a check at least every 15 minutes; per exercise an editor, setup and
 check block, exactly 3 hints, 1 solution and a `check_<label>` in `checks.py`; an exit question
 tagged with a unit misconception. Run: `uv run pytest -q tests/test_unit_lint.py`.
+
+**Instructor mode** (`components/instructor.js`, CSS in `components.css`, flag set by an
+`include-in-header` snippet in `_quarto.yml`). Open any page with `?instructor` (kept for the browser
+tab, `?instructor=0` turns it off): hints, solutions, "Show Solution", the anim reveal, predict
+`.explain` and quiz "The answer is ..." text are hidden (quizzes keep correct/incorrect), the warm-up
+gate is lifted, and a badge offers a "Presenter" toggle (150 % text and code). Hidden, not secret:
+quarto-live solutions stay in the page HTML. `solution.py` is never shipped. Test: `tools/smoke_instructor.py`.
