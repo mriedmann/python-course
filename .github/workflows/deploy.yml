@@ -22,10 +22,16 @@ jobs:
       - uses: quarto-dev/quarto-actions/setup@v2
         with:
           version: 1.10.19
+      - uses: actions/cache@v4
+        with:
+          path: site/pyodide
+          key: pyodide-0.28.1-${{ hashFiles('site/_quarto.yml', 'tools/fetch_pyodide.py') }}
+      - run: uv run python tools/fetch_pyodide.py
       - run: quarto render site
       - name: Check site size and data files
         run: |
           du -sh site/_site
+          test "$(du -sm site/_site | cut -f1)" -le 300 || { echo "_site exceeds 300 MB"; exit 1; }
           test -f site/_site/data/quotes.csv
           test -f site/_site/sw-manifest.json
       - uses: actions/upload-pages-artifact@v5
