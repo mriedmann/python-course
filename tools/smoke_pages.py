@@ -11,7 +11,7 @@ import time
 
 from playwright.sync_api import sync_playwright
 
-from smoke_browser import RUN_READY, TIMEOUT_MS, serve
+from smoke_browser import RUN_READY, TIMEOUT_MS, add_target_args, launch, site_url
 
 CHECKS = {
     "smoke/pandas.html": [r"SMOKE pandas rows=1073 customers=36 cp1252_ok=True merge_rows=1073\b"],
@@ -42,12 +42,12 @@ def check(page, base: str, path: str, patterns: list[str]) -> list[str]:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--base-url", help="deployed site root, e.g. https://mriedmann.github.io/python-course/")
+    add_target_args(parser)
     args = parser.parse_args()
-    base = args.base_url.rstrip("/") + "/" if args.base_url else serve()
+    base = site_url(args)
     failed = False
     with sync_playwright() as p:
-        browser = p.chromium.launch(channel="chrome", headless=True)
+        browser = launch(p, args)
         try:
             for path, patterns in CHECKS.items():
                 errors = check(browser.new_page(), base, path, patterns)
