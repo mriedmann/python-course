@@ -46,18 +46,18 @@ non-functional targets, so that gate G-A can be decided on evidence.
 
 Not in the PoC: JupyterLite workspace, stepper, error explanations, instructor mode, other units.
 
-**Acceptance criteria (gate G-A).**
+**Acceptance criteria (gate G-A).** All met on 15 Oct 2026, see `docs/reports/g-a_report.md`.
 
-- [ ] A quarto-live Python exercise with a hidden check, hint ladder and solution reveal works in Chrome and Firefox.
-- [ ] The quiz, predict-lock and Parsons components run inside the Quarto page and report pass/fail; results survive a reload (`localStorage`).
-- [ ] U7 passes the Unit Definition of Done (reviewer check; the CI lint can follow in phase 2).
-- [ ] pandas reads both CSV files in the browser, including the Windows-1252 file, and a matplotlib chart renders.
-- [ ] The first Python cell is ready within 15 s on a 50 Mbit/s connection (Chrome DevTools throttling), measured on the deployed site.
-- [ ] Total site payload under 300 MB; the Pyodide build and wheels are self-hosted, or quarto-live's CDN loading is documented as a known deviation to fix at G-B.
-- [ ] The site works offline after the first visit (service worker).
-- [ ] The Stop button terminates `while True: pass`.
-- [ ] The two candidate APIs answer `requests.get` from the deployed page (CORS), or a snapshot fallback is confirmed necessary.
-- [ ] The G-A report is written and the decision (confirm quarto-live or switch) is recorded in the decision log.
+- [x] A quarto-live Python exercise with a hidden check, hint ladder and solution reveal works in Chrome and Firefox.
+- [x] The quiz, predict-lock and Parsons components run inside the Quarto page and report pass/fail; results survive a reload (`localStorage`).
+- [x] U7 passes the Unit Definition of Done (reviewer check; the CI lint can follow in phase 2).
+- [x] pandas reads both CSV files in the browser, including the Windows-1252 file, and a matplotlib chart renders.
+- [x] The first Python cell is ready within 15 s on a 50 Mbit/s connection (Chrome DevTools throttling), measured on the deployed site.
+- [x] Total site payload under 300 MB; the Pyodide build and wheels are self-hosted, or quarto-live's CDN loading is documented as a known deviation to fix at G-B.
+- [x] The site works offline after the first visit (service worker).
+- [x] The Stop button terminates `while True: pass`.
+- [x] The two candidate APIs answer `requests.get` from the deployed page (CORS), or a snapshot fallback is confirmed necessary.
+- [x] The G-A report is written and the decision (confirm quarto-live or switch) is recorded in the decision log.
 
 **Suggested timebox:** five working days. If the first two criteria are not met after two days, start
 the pyodide-mkdocs-theme comparison in parallel.
@@ -121,6 +121,8 @@ the plan and the units. Exit when the pilot criteria hold.
 | 15 Oct 2026 | Components (quiz, predict, Parsons, animation) are **fenced divs handled by one Lua filter** plus vanilla JS, not shortcodes; Parsons is built natively (HTML drag-and-drop + keyboard), not by wrapping js-parsons | Quarto shortcodes cannot take a body; js-parsons needs jQuery/jQuery UI, which is more code than the widget itself |
 | 15 Oct 2026 | Hidden checks live once in each unit's `checks.py` (`check_<label>(ns)`), included into quarto-live check blocks through `components/check.py`; `solution.py` holds the reference solutions and is tested under CPython | Single source of truth, testable in CI |
 | 15 Oct 2026 | PoC Stop button reloads the page (quarto-live 0.2.0 has no interrupt; GitHub Pages cannot enable cross-origin isolation). Known limit: edits on the page are lost | Smallest fix that meets the robustness criterion; revisit at G-B |
+| 15 Oct 2026 | **Gate G-A passed: quarto-live stack confirmed.** Known deviation: Pyodide loads from jsDelivr until self-hosted at G-B; Google Fonts to be removed at G-B | All ten criteria met on the deployed site (`docs/reports/g-a_report.md`); first cell ready in 11–12.5 s at 50 Mbit/s |
+| 15 Oct 2026 | U13 APIs confirmed: Frankfurter (`api.frankfurter.dev/v1`) and Open-Meteo answer from the github.io origin | Measured in the PoC (T8) |
 | 15 Oct 2026 | **Standalone course**, not an addition to the existing course. Basics G0–G3 get full units; budget 10 h | Learners have no programming experience; a 25-minute refresher cannot carry them |
 | 15 Oct 2026 | **Self-paced first.** Every unit works alone in the browser; instructor mode is optional | Platform promise "open a link, start learning" |
 | 15 Oct 2026 | **PoC = stack spike + one full unit (U7) + pandas smoke test** | Tests the riskiest choices with the least content |
@@ -138,7 +140,7 @@ the plan and the units. Exit when the pilot criteria hold.
 
 ## Open questions
 
-- [ ] Confirm the two U13 APIs (Frankfurter, Open-Meteo) from the deployed page, or pick others.
+- [x] Confirm the two U13 APIs (Frankfurter, Open-Meteo) from the deployed page: both answer (G-A report).
 - [ ] Animation technique for step 3 (hand-built SVG vs Manim video): decide after the PoC shows what a unit page needs.
 - [ ] Pilot group and timing for phase 4.
 - [x] Does quarto-live accept a self-hosted Pyodide `indexURL`? Yes: `pyodide: engine-url:` in `_quarto.yml` replaces the `indexURL`; the copy must be exactly Pyodide 0.28.1 (found in T1 from the source, not yet exercised).

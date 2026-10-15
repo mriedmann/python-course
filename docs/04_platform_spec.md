@@ -83,15 +83,16 @@ flowchart LR
 ## Tooling
 
 Decision: lesson pages are built with Quarto plus the quarto-live extension, the workspace is
-JupyterLite, both run Pyodide. Custom components (quiz, predict-lock, Parsons, stepper) are small
-JavaScript add-ons exposed as Quarto shortcodes. The decision is confirmed or reversed at gate G-A.
+JupyterLite, both run Pyodide. Custom components (quiz, predict-lock, Parsons, animation, later the stepper) are small
+vanilla JavaScript add-ons written as fenced divs and processed by one Lua filter (shortcodes cannot
+take a body; decided in the PoC). The decision is confirmed or reversed at gate G-A.
 
 | Tool | Role | Why | Watch out |
 | --- | --- | --- | --- |
 | [Pyodide](https://pyodide.org) | Python runtime (CPython in WebAssembly) | Real CPython; numpy, pandas, matplotlib work; `requests` works natively since 0.25 | Large first download; packages must be Pyodide builds |
 | [quarto-live](https://github.com/r-wasm/quarto-live) | Lesson pages: live cells, exercises, hints, solutions, custom grading | Lessons are Markdown; grading is Python; MIT | 0.1.x dev version, pin the exact version; verify it can load a self-hosted Pyodide |
 | [JupyterLite](https://jupyterlite.readthedocs.io) + pyodide kernel | Workspace: Make notebooks, `.py` projects (U10, U15), final task | Real `.ipynb` files (R9); `%pip install`; file browser | Heavier UI; kernel and Pyodide versions are strictly paired |
-| [js-parsons](https://github.com/ProblemSolvingIO/parsons) | Parsons problems (step 5) | Drag-and-drop with indentation; MIT | Old code base; wrap it behind our own component |
+| Own Parsons component (`site/components/parsons.js`) | Parsons problems (step 5) | Native drag-and-drop plus keyboard, no dependency | Replaced js-parsons in the PoC: it needs jQuery UI and is more code than the widget |
 | [futurecoder](https://github.com/alexmojaki/futurecoder) | Reference design, not deployed | Hint ladder, predict-the-output and Parsons proven with beginners | Generic content; adapting its engine is a larger job |
 | [live-py-tutor](https://github.com/livinNector/live-py-tutor) / Python Tutor | "Step through" stepper | Shows name tags pointing at objects (P9) | A fork; embed in an iframe so it can be swapped |
 | [python-friendly-error-messages](https://github.com/RaspberryPiFoundation/python-friendly-error-messages) | Plain-language error explanations | Built for Pyodide | Generic; add unit-specific explanations |
@@ -152,8 +153,9 @@ Authors write Markdown and Python only; adding a unit needs no JavaScript.
   the unit limits.
 - **Exercises** use quarto-live `{pyodide}` blocks with `exercise:` labels, `setup` blocks and
   `check: true` grading. Hints and solutions are separate blocks revealed in order.
-- **Quiz, predict and Parsons** use shortcodes, e.g. `{{< parsons id="loop-sum" >}}` with the
-  correct lines in the body; the component shuffles them. Quiz questions carry the goal or
+- **Quiz, predict, Parsons and animation** use fenced divs, e.g. `::: {.parsons #loop-sum}` with the
+  correct lines as a code block inside; the component shuffles them. The syntax is documented in
+  `site/units/README.md`. Quiz questions carry the goal or
   misconception ID they test.
 - **Checks** are plain asserts with a learner-facing message:
   `assert total == 42.5, "Check the unit: the price is per piece, multiply by quantity"`.
