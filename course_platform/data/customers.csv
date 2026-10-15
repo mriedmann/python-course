@@ -1,0 +1,37 @@
+customer_id;customer_name;country;industry;segment;customer_since
+C001;Chemiewerk Süd AG;AT;Chemicals;Key account;14.05.2020
+C002;Donautal Pharma GmbH;AT;Pharma;Standard;19.01.2012
+C003;Brauerei Kühnhof;AT;Food & Beverage;Key account;23.08.2010
+C004;Wasserverband Unteres Murtal;AT;Water treatment;Standard;31.12.2012
+C005;Papierfabrik Lindenau;AT;Pulp & paper;Standard;24.09.2021
+C006;Alpenmilch eGen;AT;Food & Beverage;Standard;18.09.2006
+C007;Steirische Lackwerke GmbH;AT;Chemicals;Standard;05.01.2007
+C008;Biokraft Weinviertel GmbH;AT;Energy;Standard;22.07.2011
+C009;Rheinauer Spezialchemie GmbH;DE;Chemicals;Standard;29.02.2008
+C010;Hanseatische Pharmawerke AG;DE;Pharma;Standard;15.10.2020
+C011;Stadtwerke Grünberg;DE;Water treatment;Standard;07.12.2011
+C012;Fränkische Molkerei Weißach;DE;Food & Beverage;Key account;11.12.2020
+C013;Chemiepark Saalfurt GmbH;DE;Chemicals;Standard;06.05.2015
+C014;Kunststoffwerk Görlitzer & Söhne;DE;Chemicals;Standard;11.12.2013
+C015;Zellstoff Nordheide GmbH;DE;Pulp & paper;Standard;09.06.2017
+C016;Bayerische Getränke Union;DE;Food & Beverage;Standard;12.08.2007
+C017;Klärwerk Mittelland;DE;Water treatment;Standard;29.10.2021
+C018;Isarchem Feinchemie GmbH;DE;Pharma;Standard;06.01.2016
+C019;Thurgauer Aromen AG;CH;Food & Beverage;Standard;07.10.2016
+C020;Basler Wirkstoff AG;CH;Pharma;Standard;03.06.2014
+C021;Zürcher Wasserwerke Limmat;CH;Water treatment;Standard;01.10.2015
+C022;Ticino Chimica SA;CH;Chemicals;Standard;27.07.2005
+C023;Chimica Adriatica S.p.A.;IT;Chemicals;Standard;06.03.2022
+C024;Caseificio Valsugana;IT;Food & Beverage;Key account;05.02.2006
+C025;Farmaceutici Lombardi S.r.l.;IT;Pharma;Standard;26.09.2016
+C026;Acque Venete Servizi;IT;Water treatment;Standard;21.04.2007
+C027;Moravská chemie a.s.;CZ;Chemicals;Standard;19.08.2014
+C028;Pivovar Šumava;CZ;Food & Beverage;Standard;25.10.2015
+C029;Vodárny Vltava a.s.;CZ;Water treatment;Standard;27.09.2007
+C030;Tisza Vegyipari Zrt.;HU;Chemicals;Standard;01.04.2015
+C031;Balaton Élelmiszer Kft.;HU;Food & Beverage;Standard;10.01.2021
+C032;Duna Gyógyszer Zrt.;HU;Pharma;Standard;28.03.2017
+C033;Slovchem Bratislava a.s.;SK;Chemicals;Standard;07.01.2014
+C034;Tatra Mlieko s.r.o.;SK;Food & Beverage;Standard;26.11.2011
+C035;Ljubljanske Vode d.o.o.;SI;Water treatment;Standard;06.07.2019
+C036;Celjska Kemija d.d.;SI;Chemicals;Standard;29.09.2015

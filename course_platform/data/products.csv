@@ -1,0 +1,25 @@
+product_id;product_name;category;flow_m3h;head_m;power_kw;material;list_price_eur;launch_date
+P001;Centrifugal pump CP-40;Centrifugal pump;12,00;32;2,20;1.4404 stainless;3850,00;02.05.2016
+P002;Centrifugal pump CP-65;Centrifugal pump;45,00;40;7,50;1.4404 stainless;6900,00;01.08.2018
+P003;Centrifugal pump CP-80;Centrifugal pump;90,00;50;18,50;1.4404 stainless;11800,00;20.08.2020
+P004;Centrifugal pump CP-100;Centrifugal pump;160,00;55;37,00;Duplex 1.4462;21500,00;27.09.2020
+P005;Centrifugal pump CP-65H;Centrifugal pump;40,00;38;7,50;Hastelloy C-22;14900,00;04.04.2022
+P006;Mag-drive pump MD-25;Magnetic drive pump;6,00;20;1,10;PP;2650,00;25.02.2016
+P007;Mag-drive pump MD-50;Magnetic drive pump;25,00;30;4,00;PVDF;5400,00;03.07.2017
+P008;Mag-drive pump MD-80;Magnetic drive pump;60,00;35;11,00;PVDF;9600,00;27.09.2021
+P009;Dosing pump DP-1;Dosing pump;0,01;100;0,09;PVDF;980,00;20.12.2021
+P010;Dosing pump DP-5;Dosing pump;0,05;160;0,18;1.4571 stainless;1650,00;29.03.2021
+P011;Dosing pump DP-20;Dosing pump;0,20;100;0,37;1.4571 stainless;2900,00;19.09.2019
+P012;Heat exchanger PHE-10;Heat exchanger;10,00;;;1.4404 stainless;4200,00;03.06.2021
+P013;Heat exchanger PHE-40;Heat exchanger;40,00;;;1.4404 stainless;9800,00;21.02.2021
+P014;Heat exchanger PHE-40T;Heat exchanger;40,00;;;Titanium;17600,00;03.07.2020
+P015;Heat exchanger STHE-120;Heat exchanger;120,00;;;Carbon steel;26400,00;30.07.2021
+P016;Agitator AG-200;Agitator;;;0,75;1.4404 stainless;5300,00;12.12.2019
+P017;Agitator AG-1000;Agitator;;;4,00;1.4404 stainless;12700,00;09.09.2017
+P018;Agitator AG-5000;Agitator;;;15,00;Duplex 1.4462;31800,00;11.01.2015
+P019;Valve BV-50;Valve;;;;1.4408 cast stainless;640,00;20.11.2021
+P020;Valve BV-100;Valve;;;;1.4408 cast stainless;1280,00;27.11.2015
+P021;Valve CV-50;Valve;;;;1.4408 cast stainless;2350,00;29.03.2016
+P022;Valve CV-100;Valve;;;;1.4408 cast stainless;4100,00;22.03.2018
+P023;Commissioning (2 days);Service;;;;;1450,00;06.02.2016
+P024;Annual maintenance contract;Service;;;;;2200,00;16.01.2020
