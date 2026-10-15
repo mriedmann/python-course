@@ -68,7 +68,7 @@ Report back: summary, files changed, verification output, open issues/deviations
 
 ### Worker loop
 
-1. `git switch main && git pull && git switch -c poc/<slug>` (or use the branch named in the brief).
+1. `git switch poc/g-a && git switch -c poc/<slug>` (or use the base/branch named in the brief).
 2. Read the context listed in the brief. Load the `ponytail` skill; load `quarto-authoring` for any
    `.qmd`/`_quarto.yml` work.
 3. Implement the smallest change that meets every acceptance criterion.
@@ -81,8 +81,10 @@ Report back: summary, files changed, verification output, open issues/deviations
 
 - Review with the `ponytail-review` skill (correct, safe, tested, lean) plus the task's acceptance
   criteria and, for units, the Unit Definition of Done (`docs/02`).
-- Re-run verification locally. Merge via PR: `gh pr create --fill` then
-  `gh pr merge --squash --delete-branch`. A push to `main` deploys to Pages.
+- Re-run verification locally, then merge the task branch into the phase integration branch
+  (`poc/g-a` in phase 1) with `git merge --no-ff`.
+- Only the **course owner merges into `main`** (via PR from the integration branch). A push to
+  `main` deploys to Pages. Agents never merge into `main` themselves.
 
 ## 4. Repository layout (target, from `docs/04`)
 
@@ -118,7 +120,8 @@ throttling (50 Mbit/s) via a CDP session: `Network.emulateNetworkConditions`.
 
 ## 6. Git conventions
 
-- Branches: `poc/<slug>`; one task per branch; PR into `main`, squash merge.
+- Branches: `poc/<slug>`, one task per branch, merged `--no-ff` into the integration branch
+  `poc/g-a`; the course owner merges `poc/g-a` into `main` via PR.
 - Commit messages: imperative, ≤ 72-char subject, body says *why*. Reference IDs where useful
   (`U7`, `G-A`, `R15`). Agents append the attribution trailer given by their harness.
 - Never commit `site/_site/`, `.quarto/`, `.venv/`, downloaded Pyodide tarballs outside the
