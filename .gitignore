@@ -8,3 +8,4 @@ site/.quarto/
 archive/
 .claude/worktrees/
 site/pyodide/
+dist/

@@ -16,6 +16,7 @@ run() { # name command...
   run components uv run python tools/smoke_components.py
   run errors uv run python tools/smoke_errors.py
   run pages uv run python tools/smoke_pages.py
+  run workshop sh -c "uv run python tools/build_workshop.py && uv run python tools/smoke_workshop.py"
   run offline uv run python tools/smoke_offline.py
   run thirdparty uv run python tools/smoke_thirdparty.py
   run unit_u7 uv run python tools/smoke_unit.py units/07-functions/ \

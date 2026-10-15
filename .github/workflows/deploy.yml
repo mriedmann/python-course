@@ -38,6 +38,13 @@ jobs:
         run: |
           google-chrome --version
           SKIP_RENDER=1 SMOKE_LOG_DIR=/tmp/smoke-logs bash tools/smoke_all.sh
+      - name: Build offline workshop package
+        run: uv run python tools/build_workshop.py
+      - uses: actions/upload-artifact@v5
+        with:
+          name: python-course-workshop
+          path: dist/python-course-workshop-*.zip
+          retention-days: 30
       - name: Upload smoke logs
         if: failure()
         uses: actions/upload-artifact@v5
