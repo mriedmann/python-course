@@ -101,3 +101,22 @@ skill, misconception and retrieved-unit IDs exist in `docs/01`/`docs/03`; durati
 tags span two retrieved units; a check at least every 15 minutes; per exercise an editor, setup and
 check block, exactly 3 hints, 1 solution and a `check_<label>` in `checks.py`; an exit question
 tagged with a unit misconception. Run: `uv run pytest -q tests/test_unit_lint.py`.
+
+## Make notebook (workspace)
+
+Full-pattern units can add `make.ipynb` next to `index.qmd` for the larger Make task. It is not a
+Quarto page (`_quarto.yml` renders only `*.qmd`); `site/tools/lite_build.py` copies every
+`units/*/make.ipynb` into the JupyterLite workspace at the same path, next to `data/` and `projects/`
+(`site/workspace/projects/`, the course `.py` modules).
+
+| Cell | Tag | Content |
+| --- | --- | --- |
+| markdown | | Brief, and how to check: the toolbar button **Restart & Run All** (*Kernel > Restart Kernel and Run All Cells…*) |
+| code | `setup` | Before U8: "Setup, just run it" loading the data by relative path, e.g. `../../data/quotes.csv` |
+| code | `exercise:<label>` | Skeleton; `...` placeholders so it runs and the self-check reports what is missing |
+| code | `check` | Self-check: plain asserts with the same messages as `check_<label>` in `checks.py` (no imports from hidden files), ending with `print("All checks passed. Well done!")` |
+
+**Solution.** No second notebook: the `# exercise: <label>` section of `solution.py` is the solution.
+CI gate 3 (`tests/test_notebooks.py`) puts it into the `exercise:<label>` cell and runs the notebook top
+to bottom under CPython in the unit folder; it also checks that the unsolved skeleton fails in the
+`check` cell. `tools/smoke_workspace.py` does the same in the browser's Pyodide kernel for U7.
