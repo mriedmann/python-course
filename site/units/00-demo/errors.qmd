@@ -1,0 +1,124 @@
+---
+title: "Fixture: error explanations"
+engine: markdown
+description: "Not course content, not linked. tools/smoke_errors.py runs each cell and checks the explanation."
+resources:
+  - ../../data/customers.csv
+---
+
+Technical fixture: each cell raises one error type.
+
+```{pyodide}
+#| caption: NameError on load
+#| autorun: true
+print(quote_count)
+```
+
+```{pyodide}
+#| caption: NameError
+total = quantity * 2
+```
+
+```{pyodide}
+#| caption: NameError before def
+print(net_price(1200.0))
+
+def net_price(price):
+    return price * 0.97
+```
+
+```{pyodide}
+#| caption: TypeError missing argument
+def quote_value(quantity, unit_price):
+    return quantity * unit_price
+
+quote_value(3)
+```
+
+```{pyodide}
+#| caption: TypeError extra argument
+def quote_value(quantity, unit_price):
+    return quantity * unit_price
+
+quote_value(3, 1345.18, 7)
+```
+
+```{pyodide}
+#| caption: TypeError str plus int
+label = "Quantity: " + 3
+```
+
+```{pyodide}
+#| caption: TypeError NoneType
+def region_total(values):
+    total = sum(values)
+
+region_total([1200.0, 845.5]) + 100
+```
+
+```{pyodide}
+#| caption: SyntaxError
+for region in ["DACH", "CEE"]
+    print(region)
+```
+
+```{pyodide}
+#| caption: IndentationError
+def discount(price):
+return price * 0.95
+```
+
+```{pyodide}
+#| caption: KeyError
+quote = {"quote_id": "Q2023-00001", "quantity": 1}
+quote["unit_price"]
+```
+
+```{pyodide}
+#| caption: IndexError
+regions = ["DACH", "CEE", "Nordics"]
+regions[3]
+```
+
+```{pyodide}
+#| caption: ValueError int
+int("2150,44")
+```
+
+```{pyodide}
+#| caption: ValueError raise
+def check_discount(pct):
+    if pct > 30:
+        raise ValueError(f"discount {pct} % is above the 30 % limit")
+    return pct
+
+check_discount(45)
+```
+
+```{pyodide}
+#| caption: ZeroDivisionError
+won, lost = 0, 0
+win_rate = won / (won + lost)
+```
+
+```{pyodide}
+#| caption: AttributeError
+region = "DACH"
+region.lowercase()
+```
+
+```{pyodide}
+#| caption: FileNotFoundError
+open("data/quote.csv")
+```
+
+```{pyodide}
+#| caption: UnicodeDecodeError
+with open("data/customers.csv", encoding="utf-8") as f:
+    text = f.read()
+```
+
+```{pyodide}
+#| caption: ModuleNotFoundError
+import pandsa
+```
