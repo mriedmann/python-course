@@ -90,7 +90,7 @@ body:has(.quiz.warmup:not(.submitted)) .exercise-cell::before {
 
 /* Instructor mode (instructor.js; class on <html> set by the include-in-header snippet): no spoilers.
    display:none keeps hidden things out of the keyboard order. */
-html.instructor :is(.exercise-hint, .exercise-solution, .predict .explain, .anim .reveal,),
+html.instructor :is(.exercise-hint, .exercise-solution, .predict .explain, .anim .reveal),
 html.instructor .btn-exercise-editor:is([aria-label*="Hint"], [aria-label*="Solution"], .btn-exercise-solution),
 html.instructor .anim > .btn { display: none !important; }
 html.instructor .quiz.submitted .quiz-answer { background: none; }
