@@ -76,3 +76,12 @@ markup. Full example: `00-demo/components.qmd`.
 
 State and pass/fail are stored in `localStorage` (`pycourse:v1:<path>:<id>`); each result fires a
 `pycourse:result` event (`{id, kind, passed}`). Test: `uv run python tools/smoke_components.py`.
+
+**Unit lint** (`tests/test_unit_lint.py`, runs in CI on every push). For each `index.qmd` with a
+`unit:` front-matter key it checks the machine-checkable Definition of Done: required keys; goal,
+skill, misconception and retrieved-unit IDs exist in `docs/01`/`docs/03`; duration, pattern,
+`retrieves`, goals and misconceptions match the unit's row in `docs/03`; duration limits and
+`steps` summing to `duration_min`; `.step` sections in pattern order; a 3-5 question warm-up whose
+tags span two retrieved units; a check at least every 15 minutes; per exercise an editor, setup and
+check block, exactly 3 hints, 1 solution and a `check_<label>` in `checks.py`; an exit question
+tagged with a unit misconception. Run: `uv run pytest -q tests/test_unit_lint.py`.
