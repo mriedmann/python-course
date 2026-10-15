@@ -49,6 +49,7 @@ else:
 
 ::: {.question tags="U5 G4"}
 `quantities = [1, 1, 2, 2, 1, 2, 1, 10]`. What does `quantities[-1]` give?
+
 - [ ] `1`
 - [ ] `2`
 - [x] `10`
