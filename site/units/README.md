@@ -33,8 +33,23 @@ solution in `index.qmd` identical to the `solution.py` section (the browser smok
 page's solution, pytest runs `solution.py`).
 
 **Components** (`site/components/`, loaded on every page by `include-after-body` in `_quarto.yml`):
-`ladder.js` (solution gate) and `stop.js` (a Stop button next to Run while a cell runs; it reloads
-the page because quarto-live 0.2.0 cannot interrupt Pyodide). Not shortcodes; nothing to write per unit.
+`ladder.js` (solution gate), `stop.js` (a Stop button next to Run while a cell runs; it reloads
+the page because quarto-live 0.2.0 cannot interrupt Pyodide) and `errors.js` (when a cell raises:
+a plain-language explanation above the traceback of the learner's own code). Not shortcodes;
+nothing to write per unit.
+
+**Unit-specific error explanations** (optional). A hidden div replaces the generic explanation when
+an error of type `exception` whose message contains `match` (optional) occurs anywhere on the page.
+The build fails without `exception`. Use it for the exercise that starts from a real error (P5).
+
+```markdown
+::: {.error-explain exception="NameError" match="product_name"}
+Python runs a cell from top to bottom. `product_name` only exists after its `def` block has run.
+:::
+```
+
+Test: `uv run python tools/smoke_errors.py` (fixture page `00-demo/errors.qmd`, one cell per error
+type, plus U7's `fix_order`).
 
 ````markdown
 ```{pyodide}

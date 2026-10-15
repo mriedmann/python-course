@@ -1,6 +1,7 @@
 -- Lesson components (docs/04 "Learner experience"): authors write fenced divs .quiz, .predict,
 -- .parsons and .anim (see site/units/README.md); quiz.js, predict.js, parsons.js and anim.js make
 -- them interactive. Fenced divs instead of shortcodes because Quarto shortcodes cannot take a body.
+-- `.error-explain` divs hold unit-specific error explanations for errors.js (only validated here).
 -- This filter validates the markup at build time and strips the multiple-choice answer key from
 -- the visible HTML (pandoc would render "- [x]" as a checked checkbox).
 
@@ -56,6 +57,12 @@ local function count(div, pred)
 end
 
 function Div(div)
+  if div.classes:includes("error-explain") then
+    if not (div.attributes.exception or ""):match("^%u%w*$") then
+      fail(".error-explain needs an exception attribute, e.g. exception=\"NameError\"")
+    end
+    return nil
+  end
   local kind
   for _, k in ipairs(KINDS) do
     if div.classes:includes(k) then kind = k end

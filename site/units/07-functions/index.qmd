@@ -292,6 +292,11 @@ print(first_name)
 ```
 :::
 
+::: {.error-explain exception="NameError" match="product_name"}
+Python runs a cell from top to bottom. `product_name` only exists after its `def` block has run,
+and in this cell the call comes first.
+:::
+
 ### Then, add an input with a default
 
 Your manager asks: "What is a quote line worth if we grant an extra discount?" Give `quote_value` a
