@@ -117,6 +117,10 @@ the plan and the units. Exit when the pilot criteria hold.
 
 | Date | Decision | Reason |
 | --- | --- | --- |
+| 15 Oct 2026 | Pinned PoC stack: Quarto 1.10.19, quarto-live v0.2.0, Pyodide 0.28.1 (the version quarto-live 0.2.0 hard-codes) | Exact versions found in the stack spike (T1); upgrades go through CI |
+| 15 Oct 2026 | Components (quiz, predict, Parsons, animation) are **fenced divs handled by one Lua filter** plus vanilla JS, not shortcodes; Parsons is built natively (HTML drag-and-drop + keyboard), not by wrapping js-parsons | Quarto shortcodes cannot take a body; js-parsons needs jQuery/jQuery UI, which is more code than the widget itself |
+| 15 Oct 2026 | Hidden checks live once in each unit's `checks.py` (`check_<label>(ns)`), included into quarto-live check blocks through `components/check.py`; `solution.py` holds the reference solutions and is tested under CPython | Single source of truth, testable in CI |
+| 15 Oct 2026 | PoC Stop button reloads the page (quarto-live 0.2.0 has no interrupt; GitHub Pages cannot enable cross-origin isolation). Known limit: edits on the page are lost | Smallest fix that meets the robustness criterion; revisit at G-B |
 | 15 Oct 2026 | **Standalone course**, not an addition to the existing course. Basics G0–G3 get full units; budget 10 h | Learners have no programming experience; a 25-minute refresher cannot carry them |
 | 15 Oct 2026 | **Self-paced first.** Every unit works alone in the browser; instructor mode is optional | Platform promise "open a link, start learning" |
 | 15 Oct 2026 | **PoC = stack spike + one full unit (U7) + pandas smoke test** | Tests the riskiest choices with the least content |
@@ -137,4 +141,4 @@ the plan and the units. Exit when the pilot criteria hold.
 - [ ] Confirm the two U13 APIs (Frankfurter, Open-Meteo) from the deployed page, or pick others.
 - [ ] Animation technique for step 3 (hand-built SVG vs Manim video): decide after the PoC shows what a unit page needs.
 - [ ] Pilot group and timing for phase 4.
-- [ ] Does quarto-live accept a self-hosted Pyodide `indexURL`? If not, self-hosting moves to a custom loader at G-B.
+- [x] Does quarto-live accept a self-hosted Pyodide `indexURL`? Yes: `pyodide: engine-url:` in `_quarto.yml` replaces the `indexURL`; the copy must be exactly Pyodide 0.28.1 (found in T1 from the source, not yet exercised).
