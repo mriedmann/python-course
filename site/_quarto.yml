@@ -10,6 +10,9 @@ project:
   type: website
   resources:
     - components/*.js
+    - sw.js
+  post-render:
+    - tools/sw_manifest.py
 
 website:
   title: "Python for Fluvia analysts"
@@ -26,6 +29,11 @@ format:
     include-after-body:
       - text: |
           <script>
+            // Offline: service worker at the site root (works under the /python-course/ sub-path).
+            if ("serviceWorker" in navigator) {
+              const root = new URL(document.querySelector('meta[name="quarto:offset"]').content, location.href);
+              navigator.serviceWorker.register(new URL("sw.js", root), { scope: root.pathname }).catch(console.error);
+            }
             for (const f of ["ladder.js", "stop.js"]) {
               const s = document.createElement("script");
               s.src = document.querySelector('meta[name="quarto:offset"]').content + "components/" + f;
