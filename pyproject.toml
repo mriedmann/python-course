@@ -1,0 +1,18 @@
+[project]
+name = "python-course"
+version = "0.1.0"
+description = "Browser Python course for technical professionals: datasets, checks and CI tooling"
+requires-python = ">=3.12"
+dependencies = [
+    "pandas>=2.2",
+    "matplotlib>=3.9",
+    "requests>=2.32",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+]
+
+[tool.uv]
+package = false
