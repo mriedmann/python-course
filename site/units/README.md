@@ -58,3 +58,20 @@ net_value = ______
 
 Then three `.hint` divs and one `.solution` div as above. Smoke test a built page with
 `uv run python tools/smoke_browser.py units/<NN>-<slug>/ [--mechanics]`.
+
+**Lesson components** (`components/components.lua` + `quiz.js`, `predict.js`, `parsons.js`,
+`anim.js`, `components.css`). Fenced divs, each with a unique `#id`; the build fails on malformed
+markup. Full example: `00-demo/components.qmd`.
+
+- `::: {.quiz #id .warmup}` (or `.exit`) with `::: {.question tags="U5 G4"}` divs. Multiple choice:
+  a task list with exactly one `- [x]`. Short answer: `answer="None"` (alternatives `a|b`, compared
+  after stripping, case-sensitive). A `.warmup` quiz hides the page's live cells until submitted.
+- `::: {.predict #id}` around one `{pyodide}` block: Run stays disabled until the prediction is
+  locked; the first run is compared with the prediction (lines stripped, trailing blank lines dropped).
+- `::: {.parsons #id}`: one `python` block with the solution (4 spaces per level), optional
+  `{.python .distractor}` blocks.
+- `::: {.anim #id}`: `::: {.frame title="..."}` divs (picture plus text alternative) and an optional
+  `::: {.reveal}` shown by "Show me the code" after the last frame was reached.
+
+State and pass/fail are stored in `localStorage` (`pycourse:v1:<path>:<id>`); each result fires a
+`pycourse:result` event (`{id, kind, passed}`). Test: `uv run python tools/smoke_components.py`.

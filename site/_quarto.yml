@@ -14,6 +14,9 @@ project:
   post-render:
     - tools/sw_manifest.py
 
+filters:
+  - components/components.lua
+
 website:
   title: "Python for Fluvia analysts"
   navbar:
@@ -25,7 +28,9 @@ website:
 format:
   live-html:
     theme: cosmo
-    # Exercise ladder (solution gate) and Stop button on every page; path via Quarto's page offset.
+    css: components/components.css
+    # Exercise ladder (solution gate), Stop button and lesson components on every page; path via
+    # Quarto's page offset.
     include-after-body:
       - text: |
           <script>
@@ -34,7 +39,7 @@ format:
               const root = new URL(document.querySelector('meta[name="quarto:offset"]').content, location.href);
               navigator.serviceWorker.register(new URL("sw.js", root), { scope: root.pathname }).catch(console.error);
             }
-            for (const f of ["ladder.js", "stop.js"]) {
+            for (const f of ["ladder.js", "stop.js", "quiz.js", "predict.js", "parsons.js", "anim.js"]) {
               const s = document.createElement("script");
               s.src = document.querySelector('meta[name="quarto:offset"]').content + "components/" + f;
               document.body.appendChild(s);
