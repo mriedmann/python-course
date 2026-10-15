@@ -11,6 +11,9 @@ project:
   resources:
     - components/*.js
 
+filters:
+  - components/components.lua
+
 website:
   title: "Python for Fluvia analysts"
   navbar:
@@ -22,11 +25,13 @@ website:
 format:
   live-html:
     theme: cosmo
-    # Exercise ladder (solution gate) and Stop button on every page; path via Quarto's page offset.
+    css: components/components.css
+    # Exercise ladder (solution gate), Stop button and lesson components on every page; path via
+    # Quarto's page offset.
     include-after-body:
       - text: |
           <script>
-            for (const f of ["ladder.js", "stop.js"]) {
+            for (const f of ["ladder.js", "stop.js", "quiz.js", "predict.js", "parsons.js", "anim.js"]) {
               const s = document.createElement("script");
               s.src = document.querySelector('meta[name="quarto:offset"]').content + "components/" + f;
               document.body.appendChild(s);
