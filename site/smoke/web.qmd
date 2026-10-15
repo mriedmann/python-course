@@ -1,0 +1,39 @@
+---
+title: "Smoke test: web requests in the browser"
+engine: markdown
+description: "Not a unit. Checks requests against two public APIs (CORS) in Pyodide."
+---
+
+Technical check, not course content. Pyodide's `requests` runs on the browser's `fetch` (quarto-live loads `pyodide_http`), so the APIs must allow cross-origin calls.
+
+```{pyodide}
+#| autorun: true
+#| caption: Frankfurter
+import requests
+try:
+    r = requests.get("https://api.frankfurter.dev/v1/latest",
+                     params={"base": "EUR", "symbols": "CZK,HUF,CHF"}, timeout=20)
+    print(r.status_code, r.json()["rates"])
+    print(f"SMOKE web frankfurter status={r.status_code} ok={r.ok and len(r.json()['rates']) == 3}")
+except Exception as e:
+    print(f"SMOKE web frankfurter error={type(e).__name__}: {e}")
+```
+
+```{pyodide}
+#| autorun: true
+#| caption: Open-Meteo
+import requests
+try:
+    r = requests.get("https://api.open-meteo.com/v1/forecast",
+                     params={"latitude": 48.21, "longitude": 16.37, "current": "temperature_2m"}, timeout=20)
+    print(r.status_code, r.json()["current"])
+    print(f"SMOKE web open-meteo status={r.status_code} ok={r.ok and 'temperature_2m' in r.json()['current']}")
+except Exception as e:
+    print(f"SMOKE web open-meteo error={type(e).__name__}: {e}")
+```
+
+```{pyodide}
+#| autorun: true
+#| caption: pyodide_http
+import pyodide_http, requests
+print("pyodide_http patched:", getattr(pyodide_http, "_patched", None) or requests.Session.send.__module__)
