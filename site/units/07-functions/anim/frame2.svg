@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="760" height="300" role="img" aria-labelledby="t d" font-family="Arial, Helvetica, sans-serif" font-size="15">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 250" width="760" height="250" role="img" aria-labelledby="t d" font-family="Arial, Helvetica, sans-serif" font-size="15">
   <title id="t">Step 2: call the function and compute</title>
   <desc id="d">The call line quote_value(quotes[0]) runs. Inside the call, the parameter row becomes a second name tag on the first quote line, quantity 1 and unit price 2150.44. The body computes 1 times 2150.44 and puts the name tag value on 2150.44. These two tags live only inside the call.</desc>
-  <rect width="760" height="300" fill="#ffffff"/>
+  <rect width="760" height="250" fill="#ffffff"/>
   <rect x="10" y="10" width="425" height="180" fill="#f6f6f6" stroke="#555"/>
   <rect x="12" y="68" width="421" height="22" fill="#fff2b3"/>
   <rect x="12" y="134" width="421" height="22" fill="#fff2b3"/>
@@ -32,7 +32,5 @@
   <line x1="540" y1="202" x2="600" y2="202" stroke="#111" stroke-width="2"/>
   <rect x="600" y="188" width="90" height="28" fill="#ffffff" stroke="#111" stroke-width="2"/>
   <text x="645" y="207" fill="#111" text-anchor="middle">2150.44</text>
-  <text x="10" y="248" fill="#111" font-weight="bold">2 Call it: the argument gets the parameter's name, then the body computes</text>
-  <text x="10" y="272" fill="#111">quotes[0] is the argument. Inside the call, row is a second name tag on that line,</text>
-  <text x="10" y="293" fill="#111">and value is tagged on 1 x 2150.44 = 2150.44.</text>
+  <text x="10" y="240" fill="#111" font-weight="bold">2 Call it: the argument gets the parameter's name, then the body computes</text>
 </svg>

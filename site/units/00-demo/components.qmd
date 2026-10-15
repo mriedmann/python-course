@@ -66,6 +66,10 @@ quantity = 4
 unit_price = 12.5
 print(quantity * unit_price)
 ```
+
+::: {.explain}
+Python prints `50.0`: multiplying by a float gives a float.
+:::
 :::
 
 ## Parsons problem

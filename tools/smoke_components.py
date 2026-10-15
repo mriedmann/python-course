@@ -43,6 +43,7 @@ def predict(page) -> None:
     run.click(force=True)  # must not run
     page.wait_for_timeout(1000)
     expect(box.locator(".exercise-cell-output")).to_have_count(0)
+    expect(box.locator(".explain")).to_be_hidden()
     expect(box.get_by_role("button", name="Lock prediction")).to_be_disabled()
     box.get_by_label("Your prediction").fill("50")  # wrong: Python prints 50.0
     box.get_by_role("button", name="Lock prediction").click()
@@ -51,6 +52,7 @@ def predict(page) -> None:
     run.click()
     expect(box.locator(".predict-verdict")).to_have_text("Compare: what differs?", timeout=TIMEOUT_MS)
     expect(box.locator(".predict-compare")).to_contain_text("50.0")
+    expect(box.locator(".explain")).to_be_visible()
     print("predict: Run disabled before lock, comparison shown after run (fail as expected)")
 
 
@@ -105,6 +107,7 @@ def restored(page) -> None:
     expect(box.get_by_label("Your prediction")).to_have_value("50")
     expect(box.get_by_label("Your prediction")).not_to_be_editable()
     expect(box.locator(".predict-verdict")).to_have_text("Compare: what differs?")
+    expect(box.locator(".explain")).to_be_visible()
     target = page.locator("#demo-parsons .parsons-list").nth(1).locator(".parsons-line")
     expect(target).to_have_count(3)
     expect(target.nth(1)).to_have_attribute("data-indent", "1")

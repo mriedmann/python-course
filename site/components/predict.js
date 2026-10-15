@@ -52,6 +52,9 @@
     }
 
     function showResult() {
+      box.classList.add("done"); // reveals the optional .explain child, after the comparison
+      const explain = box.querySelector(":scope > .explain");
+      if (explain) box.append(explain);
       const pre = (text) => el("pre", { textContent: text || "(nothing)" });
       result.replaceChildren(
         el("p", { className: `predict-verdict ${state.passed ? "pass" : "fail"}`,

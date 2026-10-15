@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="760" height="300" role="img" aria-labelledby="t d" font-family="Arial, Helvetica, sans-serif" font-size="15">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 250" width="760" height="250" role="img" aria-labelledby="t d" font-family="Arial, Helvetica, sans-serif" font-size="15">
   <title id="t">Step 1: define the function</title>
   <desc id="d">The def block is highlighted. Python stores the function under the name tag quote_value. The name tag quotes is attached to the list of 20 quote lines. Nothing has been computed yet.</desc>
-  <rect width="760" height="300" fill="#ffffff"/>
+  <rect width="760" height="250" fill="#ffffff"/>
   <rect x="10" y="10" width="425" height="180" fill="#f6f6f6" stroke="#555"/>
   <rect x="12" y="24" width="421" height="96" fill="#fff2b3"/>
   <g font-family="Courier New, monospace" font-size="13" fill="#111">
@@ -25,6 +25,4 @@
   <rect x="605" y="105" width="145" height="40" fill="#ffffff" stroke="#111" stroke-width="2"/>
   <text x="677" y="130" text-anchor="middle" fill="#111">20 quote lines</text>
   <text x="10" y="235" fill="#111" font-weight="bold">1 Name the formula and list its inputs</text>
-  <text x="10" y="260" fill="#111">def stores the recipe under the name tag quote_value. Nothing is computed yet:</text>
-  <text x="10" y="282" fill="#111">the indented body runs only when the function is called.</text>
 </svg>

@@ -67,7 +67,8 @@ markup. Full example: `00-demo/components.qmd`.
   a task list with exactly one `- [x]`. Short answer: `answer="None"` (alternatives `a|b`, compared
   after stripping, case-sensitive). A `.warmup` quiz hides the page's live cells until submitted.
 - `::: {.predict #id}` around one `{pyodide}` block: Run stays disabled until the prediction is
-  locked; the first run is compared with the prediction (lines stripped, trailing blank lines dropped).
+  locked; the first run is compared with the prediction (lines stripped, trailing blank lines dropped). An optional child `::: {.explain}` is hidden until the comparison
+  is shown, so it can state the output without spoiling the prediction.
 - `::: {.parsons #id}`: one `python` block with the solution (4 spaces per level), optional
   `{.python .distractor}` blocks.
 - `::: {.anim #id}`: `::: {.frame title="..."}` divs (picture plus text alternative) and an optional
