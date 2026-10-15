@@ -1,30 +1,13 @@
-// Offline support: precache the built site and the Pyodide 0.28.1 files from the CDN, then serve cache-first.
+// Offline support: precache the built site (incl. the self-hosted Pyodide 0.28.1 in pyodide/), then serve cache-first.
 // __BUILD__ is replaced by site/tools/sw_manifest.py after render, so every new build changes this file,
 // which makes the browser install the new worker and a fresh cache.
 const BUILD = "__BUILD__";
 const CACHE = "course-" + BUILD;
-const PYODIDE = "https://cdn.jsdelivr.net/pyodide/v0.28.1/full/";
 const ROOT = new URL("./", self.location).href; // site root = directory of sw.js
-const norm = (n) => n.toLowerCase().replace(/[-_.]+/g, "-");
 
 async function precacheList() {
   const manifest = await (await fetch(ROOT + "sw-manifest.json", { cache: "no-cache" })).json();
-  const urls = manifest.files.map((f) => ROOT + f);
-  const lock = await (await fetch(PYODIDE + "pyodide-lock.json")).json();
-  const byName = new Map(Object.entries(lock.packages).map(([k, v]) => [norm(k), v]));
-  const files = new Set(["pyodide.mjs", "pyodide.asm.js", "pyodide.asm.wasm", "python_stdlib.zip", "pyodide-lock.json"]);
-  const todo = [...manifest.pyodide_packages];
-  const seen = new Set();
-  while (todo.length) {
-    const name = norm(todo.pop());
-    if (seen.has(name)) continue;
-    seen.add(name);
-    const pkg = byName.get(name);
-    if (!pkg) throw new Error("package not in pyodide-lock.json: " + name);
-    files.add(pkg.file_name);
-    todo.push(...pkg.depends);
-  }
-  return urls.concat([...files].map((f) => PYODIDE + f));
+  return manifest.files.map((f) => ROOT + f); // includes the self-hosted Pyodide in pyodide/
 }
 
 self.addEventListener("install", (event) => {
@@ -61,7 +44,7 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   const req = event.request;
   if (req.method !== "GET" || req.headers.has("range")) return;
-  if (!req.url.startsWith(ROOT) && !req.url.startsWith(PYODIDE)) return; // third-party APIs (U13) stay live
+  if (!req.url.startsWith(ROOT)) return; // third-party APIs (U13) stay live
   event.respondWith(
     (async () => {
       const cache = await caches.open(CACHE);

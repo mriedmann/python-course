@@ -13,6 +13,7 @@ run() { # name command...
   run components uv run python tools/smoke_components.py
   run pages uv run python tools/smoke_pages.py
   run offline uv run python tools/smoke_offline.py
+  run thirdparty uv run python tools/smoke_thirdparty.py
   run unit_u7 uv run python tools/smoke_unit.py units/07-functions/ \
     --raises "fix_order:is not defined" --predict 'u7-predict:18701.1\nNone'
 } | tee /tmp/smoke_table.txt
