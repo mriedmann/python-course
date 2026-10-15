@@ -1,0 +1,5 @@
+/*-- scss:defaults --*/
+// Cosmo (Bootswatch) imports Source Sans from fonts.googleapis.com via $web-font-path: switch it off
+// (no third-party requests) and use a system font stack instead.
+$web-font-path: false;
+$font-family-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;

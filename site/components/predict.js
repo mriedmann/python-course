@@ -102,6 +102,27 @@
       if (pending && !busy && box.querySelector(".exercise-cell-output")) timer = setTimeout(compare, 300);
     }).observe(box, { childList: true, subtree: true, attributes: true, attributeFilter: ["class"] });
 
+    // The code is given, not written: lock the editor (CM6 has no public handle here, so switch off
+    // contenteditable, re-assert it whenever CodeMirror rewrites its attributes on an update).
+    // Run stays a normal button, so keyboard users still reach it.
+    function readOnly() {
+      const content = box.querySelector(".cm-content");
+      if (!content || !content.cmView || content.dataset.readonly) return;
+      content.dataset.readonly = "1";
+      const lockIt = () => {
+        if (content.getAttribute("contenteditable") !== "false") content.setAttribute("contenteditable", "false");
+        if (content.getAttribute("aria-readonly") !== "true") content.setAttribute("aria-readonly", "true");
+      };
+      new MutationObserver(lockIt).observe(content, { attributes: true, attributeFilter: ["contenteditable", "aria-readonly"] });
+      lockIt();
+      // CodeMirror still takes key presses on a non-editable content element: refuse document changes too.
+      const view = content.cmView && content.cmView.view;
+      const dispatch = view && view.dispatch.bind(view);
+      if (view) view.dispatch = (...args) => { if (!(args[0] && (args[0].changes || args[0].docChanged))) dispatch(...args); };
+    }
+    new MutationObserver(readOnly).observe(box, { childList: true, subtree: true });
+    readOnly();
+
     if (state.locked) applyLock();
     if ("printed" in state) showResult();
   }

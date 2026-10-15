@@ -37,7 +37,7 @@ Component rules:
 - **Feedback ladder:** a failed check shows one plain-language sentence, then up to three hints one
   at a time, then the solution (after the third hint or two failed attempts).
 - **Error messages:** tracebacks are shown in full with a plain-language explanation above them,
-  built on the Raspberry Pi `python-friendly-error-messages` rules plus unit-specific additions.
+  built on the course's own rules table plus unit-specific additions (`.error-explain`).
 - **Stepper:** every live cell has a "Step through" button that shows variables and references
   line by line (Python Tutor style).
 - **Pacing:** the progress bar shows the eight steps; a check occurs at least every 15 minutes.
@@ -95,7 +95,7 @@ take a body; decided in the PoC). The decision is confirmed or reversed at gate 
 | Own Parsons component (`site/components/parsons.js`) | Parsons problems (step 5) | Native drag-and-drop plus keyboard, no dependency | Replaced js-parsons in the PoC: it needs jQuery UI and is more code than the widget |
 | [futurecoder](https://github.com/alexmojaki/futurecoder) | Reference design, not deployed | Hint ladder, predict-the-output and Parsons proven with beginners | Generic content; adapting its engine is a larger job |
 | [live-py-tutor](https://github.com/livinNector/live-py-tutor) / Python Tutor | "Step through" stepper | Shows name tags pointing at objects (P9) | A fork; embed in an iframe so it can be swapped |
-| [python-friendly-error-messages](https://github.com/RaspberryPiFoundation/python-friendly-error-messages) | Plain-language error explanations | Built for Pyodide | Generic; add unit-specific explanations |
+| Own error-explanation rules (`site/components/errors.js`) | Plain-language error explanations above a learner-only traceback | Written for adults; covers the novice errors of this course; units add `.error-explain` divs | Replaced python-friendly-error-messages in phase 2 (children's texts, gaps); depends on two quarto-live 0.2.0 internals, guarded by `tools/smoke_errors.py` |
 | Animation | Concept explainers (step 3) | Hand-built SVG with step controls; Manim videos for complex ones | Decide after the PoC shows what a page needs; avoid Motion Canvas (maintenance) |
 
 Alternatives considered and not chosen:

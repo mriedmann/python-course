@@ -33,8 +33,24 @@ solution in `index.qmd` identical to the `solution.py` section (the browser smok
 page's solution, pytest runs `solution.py`).
 
 **Components** (`site/components/`, loaded on every page by `include-after-body` in `_quarto.yml`):
-`ladder.js` (solution gate) and `stop.js` (a Stop button next to Run while a cell runs; it reloads
-the page because quarto-live 0.2.0 cannot interrupt Pyodide). Not shortcodes; nothing to write per unit.
+`ladder.js` (solution gate), `drafts.js` (saves editor code to localStorage, restores it on load),
+`stop.js` (a Stop button next to Run while a cell runs; it saves drafts, then reloads the page because
+quarto-live 0.2.0 cannot interrupt Pyodide) and `errors.js` (when a cell raises:
+a plain-language explanation above the traceback of the learner's own code). Not shortcodes;
+nothing to write per unit.
+
+**Unit-specific error explanations** (optional). A hidden div replaces the generic explanation when
+an error of type `exception` whose message contains `match` (optional) occurs anywhere on the page.
+The build fails without `exception`. Use it for the exercise that starts from a real error (P5).
+
+```markdown
+::: {.error-explain exception="NameError" match="product_name"}
+Python runs a cell from top to bottom. `product_name` only exists after its `def` block has run.
+:::
+```
+
+Test: `uv run python tools/smoke_errors.py` (fixture page `00-demo/errors.qmd`, one cell per error
+type, plus U7's `fix_order`).
 
 ````markdown
 ```{pyodide}
@@ -76,3 +92,12 @@ markup. Full example: `00-demo/components.qmd`.
 
 State and pass/fail are stored in `localStorage` (`pycourse:v1:<path>:<id>`); each result fires a
 `pycourse:result` event (`{id, kind, passed}`). Test: `uv run python tools/smoke_components.py`.
+
+**Unit lint** (`tests/test_unit_lint.py`, runs in CI on every push). For each `index.qmd` with a
+`unit:` front-matter key it checks the machine-checkable Definition of Done: required keys; goal,
+skill, misconception and retrieved-unit IDs exist in `docs/01`/`docs/03`; duration, pattern,
+`retrieves`, goals and misconceptions match the unit's row in `docs/03`; duration limits and
+`steps` summing to `duration_min`; `.step` sections in pattern order; a 3-5 question warm-up whose
+tags span two retrieved units; a check at least every 15 minutes; per exercise an editor, setup and
+check block, exactly 3 hints, 1 solution and a `check_<label>` in `checks.py`; an exit question
+tagged with a unit misconception. Run: `uv run pytest -q tests/test_unit_lint.py`.

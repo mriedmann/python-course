@@ -88,6 +88,8 @@ def pass_warmup(page) -> None:
 
 
 def run_cell(page, cell, code: str) -> None:
+    """Replace the editor text and run it. An earlier run of the cell must be graded already (grade_of),
+    else its late grade is taken for this one."""
     editor = cell.locator(".cm-content")
     editor.click()
     page.keyboard.press("ControlOrMeta+A")
