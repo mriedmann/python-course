@@ -14,6 +14,7 @@ run() { # name command...
   run browser_u7 uv run python tools/smoke_browser.py units/07-functions/
   run instructor uv run python tools/smoke_instructor.py
   run drafts uv run python tools/smoke_drafts.py
+  run progress uv run python tools/smoke_progress.py
   run components uv run python tools/smoke_components.py
   run errors uv run python tools/smoke_errors.py
   run pages uv run python tools/smoke_pages.py
