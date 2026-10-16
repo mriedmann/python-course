@@ -1,0 +1,28 @@
+---
+title: "Fixture: stepper"
+engine: markdown
+description: "Not course content, not linked. tools/smoke_stepper.py steps through these cells."
+---
+
+Technical fixture for `components/stepper.js`: sandbox cells without an exercise label.
+
+```{pyodide}
+#| caption: Shared list
+prices = [1200, 950]
+backup = prices
+prices.append(400)
+```
+
+```{pyodide}
+#| caption: Endless loop
+while True:
+    pass
+```
+
+```{pyodide}
+#| caption: Error in a function
+def share(total, count):
+    return total / count
+
+print(share(1200, 0))
+```

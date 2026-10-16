@@ -212,3 +212,17 @@ OK
 - Unthrottled single runs: U7 ready 8.6 s, pandas ready/summary 11.0 s (same 27.5 MB), i.e. the throttle adds about 2.5 s / 1.5 s; the rest is Pyodide/pandas startup and package unpacking.
 - Cold-load runs are single-machine, single-network samples; the three throttled runs agree within 0.6 s.
 - `uv run pytest -q`: 9 passed.
+
+## Addendum: re-measure after self-hosting (phase 2, 15 Oct 2026)
+
+Deployed from `main` after PR #4 (Pyodide 0.28.1 self-hosted in `site/pyodide/`, no Google Fonts).
+Same method and commands as above (`measure_load.py --runs 3`, `smoke_thirdparty.py`, `smoke_offline.py`,
+all with `--base-url https://mriedmann.github.io/python-course/`).
+
+| Measure | CDN (G-A) | Self-hosted |
+| --- | --- | --- |
+| U7 first cell ready, 50 Mbit/s, median of 3 | 11.1 s | 11.2 s (13.0 / 11.2 / 11.1) |
+| pandas page summary, 50 Mbit/s, median of 3 | 12.5 s | 12.5 s (12.7 / 12.5 / 12.5) |
+| Cold transfer per page | 27.5 MB, 26.8 MB from jsDelivr | 27.8 MB, 100 % mriedmann.github.io |
+| Third-party requests (U7, pandas, demo) | jsDelivr, Google Fonts | none |
+| Offline after first visit | pass | pass |

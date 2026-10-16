@@ -15,6 +15,7 @@
   }
 
   // Turns one question div into labelled inputs; returns {get, set, grade} for that question.
+  const instructor = document.documentElement.classList.contains("instructor"); // no answer reveal
   function setupQuestion(q, quizId, n) {
     const name = `${quizId}-q${n}`;
     const prompt = q.querySelector("p");
@@ -39,6 +40,7 @@
       correct = () => get() === answer;
       const solution = () => items[answer].querySelector("label").textContent.trim();
       message = () => {
+        if (instructor) return correct() ? "Correct." : "Not quite.";
         items.forEach((li, i) => li.classList.toggle("quiz-answer", i === answer));
         return correct() ? "Correct." : `Not quite. The answer is ${solution()}.`;
       };
@@ -49,7 +51,7 @@
       get = () => input.value;
       set = (v) => { input.value = v || ""; };
       correct = () => answers.includes(input.value.trim());
-      message = () => (correct() ? "Correct." : `Not quite. The answer is ${answers[0]}.`);
+      message = () => (correct() ? "Correct." : instructor ? "Not quite." : `Not quite. The answer is ${answers[0]}.`);
     }
     q.append(feedback);
     return {

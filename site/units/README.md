@@ -39,6 +39,11 @@ quarto-live 0.2.0 cannot interrupt Pyodide) and `errors.js` (when a cell raises:
 a plain-language explanation above the traceback of the learner's own code). Not shortcodes;
 nothing to write per unit.
 
+**Stepper** (`components/stepper.js` + `stepper.py`): a "Step through" button next to Run on every
+editor. It traces the editor's code (after the exercise's hidden setup, which is not stepped and whose
+objects stay collapsed) in a fresh namespace, max 500 steps, and shows the line, frames with name tags,
+objects by `#n` (shared references) and output. Test: `uv run python tools/smoke_stepper.py`.
+
 **Unit-specific error explanations** (optional). A hidden div replaces the generic explanation when
 an error of type `exception` whose message contains `match` (optional) occurs anywhere on the page.
 The build fails without `exception`. Use it for the exercise that starts from a real error (P5).
@@ -101,3 +106,36 @@ skill, misconception and retrieved-unit IDs exist in `docs/01`/`docs/03`; durati
 tags span two retrieved units; a check at least every 15 minutes; per exercise an editor, setup and
 check block, exactly 3 hints, 1 solution and a `check_<label>` in `checks.py`; an exit question
 tagged with a unit misconception. Run: `uv run pytest -q tests/test_unit_lint.py`.
+
+**Instructor mode** (`components/instructor.js`, CSS in `components.css`, flag set by an
+`include-in-header` snippet in `_quarto.yml`). Open any page with `?instructor` (kept for the browser
+tab, `?instructor=0` turns it off): hints, solutions, "Show Solution", the anim reveal, predict
+`.explain` and quiz "The answer is ..." text are hidden (quizzes keep correct/incorrect), the warm-up
+gate is lifted, and a badge offers a "Presenter" toggle (150 % text and code). Hidden, not secret:
+quarto-live solutions stay in the page HTML. `solution.py` is never shipped. Test: `tools/smoke_instructor.py`.
+
+**Progress** (`components/progress.js`): step bar from the page's `h2.step` sections plus the navbar
+"Progress" panel. Keys (all `pycourse:v1:<path>:`): `<id>` (quiz/predict/parsons/anim, own formats),
+`exercise:<label>` `{passed, at}` (a pass is never downgraded), `visited:<step>`, `complete`, `draft:<key>`.
+A step is done when all its checks passed (predict: answered; steps without checks: visited).
+Export file: `{format: "pycourse-progress", version: 1, exported_at, items: {key: string}}`, all
+`pycourse:v1:` keys. Import accepts only that format, only such keys, < 2 MB, after a confirm. Test: `tools/smoke_progress.py`.
+
+## Make notebook (workspace)
+
+Full-pattern units can add `make.ipynb` next to `index.qmd` for the larger Make task. It is not a
+Quarto page (`_quarto.yml` renders only `*.qmd`); `site/tools/lite_build.py` copies every
+`units/*/make.ipynb` into the JupyterLite workspace at the same path, next to `data/` and `projects/`
+(`site/workspace/projects/`, the course `.py` modules).
+
+| Cell | Tag | Content |
+| --- | --- | --- |
+| markdown | | Brief, and how to check: the toolbar button **Restart & Run All** (*Kernel > Restart Kernel and Run All Cells…*) |
+| code | `setup` | Before U8: "Setup, just run it" loading the data by relative path, e.g. `../../data/quotes.csv` |
+| code | `exercise:<label>` | Skeleton; `...` placeholders so it runs and the self-check reports what is missing |
+| code | `check` | Self-check: plain asserts with the same messages as `check_<label>` in `checks.py` (no imports from hidden files), ending with `print("All checks passed. Well done!")` |
+
+**Solution.** No second notebook: the `# exercise: <label>` section of `solution.py` is the solution.
+CI gate 3 (`tests/test_notebooks.py`) puts it into the `exercise:<label>` cell and runs the notebook top
+to bottom under CPython in the unit folder; it also checks that the unsolved skeleton fails in the
+`check` cell. `tools/smoke_workspace.py` does the same in the browser's Pyodide kernel for U7.

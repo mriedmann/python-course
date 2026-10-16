@@ -87,3 +87,66 @@ body:has(.quiz.warmup:not(.submitted)) .exercise-cell::before {
 /* Error explanations (errors.js): unit texts stay hidden until a matching error occurs */
 .error-explain { display: none; }
 .error-help { margin: 0.5rem 0; padding: 0.5rem 0.75rem; border-left: 4px solid #b02a37; background: #fdf2f3; color: #212529; }
+
+/* Instructor mode (instructor.js; class on <html> set by the include-in-header snippet): no spoilers.
+   display:none keeps hidden things out of the keyboard order. */
+html.instructor :is(.exercise-hint, .exercise-solution, .predict .explain, .anim .reveal),
+html.instructor .btn-exercise-editor:is([aria-label*="Hint"], [aria-label*="Solution"], .btn-exercise-solution),
+html.instructor .anim > .btn { display: none !important; }
+html.instructor .quiz.submitted .quiz-answer { background: none; }
+/* The trainer runs the room: lift the warm-up gate. */
+html.instructor body:has(.quiz.warmup:not(.submitted)) .exercise-cell > * { display: revert; }
+html.instructor body:has(.quiz.warmup:not(.submitted)) .exercise-cell::before { display: none; }
+.instructor-badge {
+  position: fixed; right: 0.75rem; bottom: 0.75rem; z-index: 1050;
+  display: flex; gap: 0.5rem; align-items: center;
+  padding: 0.35rem 0.6rem; border-radius: 0.5rem;
+  background: #212529; color: #fff; font-size: 0.875rem; font-weight: 600;
+}
+.instructor-badge button[aria-pressed="true"] { background: #ffc107; border-color: #ffc107; color: #000; }
+.instructor-badge button:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+/* Presenter: projector sizes for text and editors. */
+html.presenter body { font-size: 150%; }
+html.presenter .cm-content { font-size: 150%; }
+html.presenter .instructor-badge { font-size: 0.875rem; }
+
+/* Progress bar and panel (progress.js). Sticky under the fixed navbar; fixed row height, no layout jump. */
+.pc-progress { position: sticky; z-index: 900; background: #fff; border-bottom: 1px solid #ced4da; padding: 0.25rem 0 0.4rem; margin-bottom: 1rem; }
+.pc-count { margin: 0 0 0.2rem; font-size: 0.85rem; font-weight: 600; color: #212529; }
+.pc-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr)); gap: 0.25rem; }
+.pc-steps a { display: block; height: 3rem; padding: 0.15rem 0.35rem; border: 1px solid #ced4da; border-top: 4px solid #6c757d; border-radius: 0.25rem;
+  font-size: 0.75rem; line-height: 1.2; color: #212529; text-decoration: none; overflow: hidden; }
+.pc-steps .done a { border-top-color: #146c43; background: #d1e7dd; }
+.pc-state { display: block; font-weight: 600; color: #495057; }
+.pc-steps .done .pc-state { color: #0f5132; }
+.pc-steps a:focus-visible, .pc-panel button:focus-visible, .pc-panel input:focus-visible { outline: 3px solid #0b5ed7; outline-offset: 2px; }
+.pc-panel { max-width: 32rem; border: 1px solid #ced4da; border-radius: 0.5rem; padding: 1rem 1.5rem; }
+.pc-panel h2 { font-size: 1.25rem; margin-top: 0; }
+.pc-msg { font-weight: 600; min-height: 1.5em; }
+.pc-warn { color: #b02a37; font-weight: 600; }
+
+/* Stepper (stepper.js): name tags point at values; objects carry a #number shared by every name on them. */
+.stepper { border: 1px solid #ced4da; border-radius: 0.5rem; padding: 0.75rem; margin: 0 0 1rem; }
+.stepper-controls { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+.stepper-controls input[type=range] { flex: 1 1 8rem; min-width: 6rem; }
+.stepper button:focus-visible, .stepper input:focus-visible { outline: 3px solid #0b5ed7; outline-offset: 2px; }
+.stepper-count, .stepper-muted { color: #495057; font-size: 0.875rem; }
+.stepper-status { font-weight: 600; margin: 0.5rem 0; }
+.stepper-body { display: flex; flex-wrap: wrap; gap: 1rem; }
+.stepper-code { flex: 1 1 18rem; min-width: 0; margin: 0; padding: 0.5rem 0 0.5rem 2.5rem; background: #f8f9fa;
+  border-radius: 0.25rem; font-size: 0.85rem; overflow-x: auto; }
+.stepper-code li { white-space: pre; color: #495057; }
+.stepper-code li code { color: #212529; background: none; padding: 0; }
+.stepper-code li.current { background: #fff3cd; font-weight: 700; list-style-type: "▶ "; }
+.stepper-state { flex: 1 1 16rem; min-width: 0; }
+.stepper-state h4 { font-size: 0.95rem; margin: 0.75rem 0 0.25rem; }
+.stepper table { border-collapse: collapse; margin-bottom: 0.5rem; font-size: 0.875rem; }
+.stepper caption { caption-side: top; text-align: left; color: #212529; font-weight: 600; padding: 0.25rem 0; }
+.stepper-frame { border: 2px solid #495057; }
+.stepper th, .stepper td { padding: 0.15rem 0.5rem; border-bottom: 1px solid #dee2e6; text-align: left; vertical-align: top; }
+.stepper-tag { display: inline-block; border: 1px solid #495057; border-radius: 0.75rem; padding: 0 0.5rem; background: #e7f1ff; font-family: var(--bs-font-monospace); }
+.stepper-ref { color: #084298; font-weight: 600; }
+.stepper-obj { border: 1px solid #ced4da; border-radius: 0.25rem; padding: 0.25rem 0.5rem; margin-bottom: 0.5rem; }
+.stepper-obj-head { margin: 0 0 0.25rem; font-weight: 600; color: #084298; }
+.stepper-out { background: #f8f9fa; padding: 0.25rem 0.5rem; font-size: 0.85rem; max-height: 12rem; overflow: auto; }
+.stepper-note { color: #b02a37; font-weight: 600; margin: 0.5rem 0 0.25rem; }

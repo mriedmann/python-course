@@ -19,6 +19,7 @@
   function offerSolution(cell, label) {
     const solutions = document.querySelectorAll(`.exercise-solution.d-none[data-exercise="${label}"]`);
     const group = cell.querySelector(".exercise-editor-header .btn-group");
+    if (document.documentElement.classList.contains("instructor")) return;
     if (!solutions.length || !group || cell.querySelector(".btn-exercise-solution")) return;
     const button = document.createElement("button");
     button.type = "button";

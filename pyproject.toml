@@ -11,6 +11,13 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "ipykernel>=7.4.0",
+    "jupyter-server>=2.21.1",
+    # Pinned with Quarto/quarto-live/Pyodide (site/_quarto.yml header): kernel 0.7.2 targets Pyodide 0.29.3
+    # but runs on the site's self-hosted 0.28.1; 0.8.x needs Pyodide 314 (Python 3.14).
+    "jupyterlite-core==0.7.6",
+    "jupyterlite-pyodide-kernel==0.7.2",
+    "nbclient>=0.11.0",
     "playwright>=1.64.0",
     "pytest>=8",
     "pyyaml>=6.0.3",
